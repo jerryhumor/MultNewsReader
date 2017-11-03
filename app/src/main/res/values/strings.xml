@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">MultNewsReader</string>
+    <string name="app_name">默阅</string>
+
+    <string name="nav_title_setting">设置</string>
 </resources>
