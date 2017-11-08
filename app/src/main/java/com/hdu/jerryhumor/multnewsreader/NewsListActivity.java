@@ -38,6 +38,7 @@ public class NewsListActivity extends BaseActivity{
         for (int i = 0; i < 5; i++){
             mNewsPagerList.add(new NewsFragment());
         }
+        initNewsTitle();
     }
 
     @Override
@@ -48,8 +49,11 @@ public class NewsListActivity extends BaseActivity{
 
     private void initNewsTitle(){
         mNewsTitleList = new ArrayList<>();
-
-
+        mNewsTitleList.add("IT");
+        mNewsTitleList.add("体育");
+        mNewsTitleList.add("经济");
+        mNewsTitleList.add("社会");
+        mNewsTitleList.add("娱乐");
     }
 
     private class MyFragmentAdapter extends FragmentPagerAdapter{
@@ -70,7 +74,7 @@ public class NewsListActivity extends BaseActivity{
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return super.getPageTitle(position);
+            return mNewsTitleList.get(position);
         }
     }
 }
