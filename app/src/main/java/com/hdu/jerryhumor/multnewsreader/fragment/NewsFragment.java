@@ -6,9 +6,13 @@ import com.hdu.jerryhumor.multnewsreader.R;
 
 /**
  * Created by jerryhumor on 2017/11/7.
+ *
+ * 新闻列表碎片
  */
 
 public class NewsFragment extends BaseFragment{
+
+    private String mUrl;
 
     @Override
     int getResourceId() {
@@ -28,5 +32,9 @@ public class NewsFragment extends BaseFragment{
     @Override
     void initEvent() {
 
+    }
+
+    public void setUrl(String url){
+        mUrl = url;
     }
 }
