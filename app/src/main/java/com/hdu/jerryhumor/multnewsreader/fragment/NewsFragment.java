@@ -1,8 +1,21 @@
 package com.hdu.jerryhumor.multnewsreader.fragment;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
 import com.hdu.jerryhumor.multnewsreader.R;
+import com.hdu.jerryhumor.multnewsreader.activity.NewsListActivity;
+import com.hdu.jerryhumor.multnewsreader.adapter.NewsListAdapter;
+import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
+import com.hdu.jerryhumor.multnewsreader.constant.NewsConstant;
+import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfo;
+import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfoResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jerryhumor on 2017/11/7.
@@ -12,7 +25,12 @@ import com.hdu.jerryhumor.multnewsreader.R;
 
 public class NewsFragment extends BaseFragment{
 
+    private RecyclerView rvNewsList;
+
+    private NewsListAdapter mAdapter;
     private String mUrl;
+    private List<NewsInfo> mNewsInfoList;
+    private NewsListActivity mActivity;
 
     @Override
     int getResourceId() {
@@ -20,21 +38,36 @@ public class NewsFragment extends BaseFragment{
     }
 
     @Override
-    void initData() {
-
+    void initView(View view) {
+        rvNewsList = view.findViewById(R.id.rv_news_list);
     }
 
     @Override
-    void initView(View view) {
-
+    void initData() {
+        mNewsInfoList = new ArrayList<>();
+        generateTestData();
+        mAdapter = new NewsListAdapter(mNewsInfoList);
+        mActivity = (NewsListActivity) getActivity();
     }
 
     @Override
     void initEvent() {
-
+        initRecyclerView();
     }
 
     public void setUrl(String url){
         mUrl = url;
+    }
+
+    private void initRecyclerView(){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
+        rvNewsList.setLayoutManager(linearLayoutManager);
+        rvNewsList.setAdapter(mAdapter);
+    }
+
+    private void generateTestData(){
+        Gson gson = new Gson();
+        NewsInfoResponse response = gson.fromJson(NewsApi.TEST_JSON_NEWS_INFO, NewsInfoResponse.class);
+        mNewsInfoList = response.getNewsInfoList();
     }
 }

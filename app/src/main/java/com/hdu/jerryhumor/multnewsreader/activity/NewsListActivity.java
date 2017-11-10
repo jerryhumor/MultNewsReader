@@ -1,4 +1,4 @@
-package com.hdu.jerryhumor.multnewsreader;
+package com.hdu.jerryhumor.multnewsreader.activity;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 
+import com.hdu.jerryhumor.multnewsreader.R;
 import com.hdu.jerryhumor.multnewsreader.activity.BaseActivity;
 import com.hdu.jerryhumor.multnewsreader.fragment.NewsFragment;
 
