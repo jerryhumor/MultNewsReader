@@ -1,16 +1,15 @@
 package com.hdu.jerryhumor.multnewsreader.fragment;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.hdu.jerryhumor.multnewsreader.R;
 import com.hdu.jerryhumor.multnewsreader.activity.NewsListActivity;
 import com.hdu.jerryhumor.multnewsreader.adapter.NewsListAdapter;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
-import com.hdu.jerryhumor.multnewsreader.constant.NewsConstant;
 import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfo;
 import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfoResponse;
 
@@ -26,6 +25,7 @@ import java.util.List;
 public class NewsFragment extends BaseFragment{
 
     private RecyclerView rvNewsList;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private NewsListAdapter mAdapter;
     private String mUrl;
@@ -40,6 +40,7 @@ public class NewsFragment extends BaseFragment{
     @Override
     void initView(View view) {
         rvNewsList = view.findViewById(R.id.rv_news_list);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
     }
 
     @Override
@@ -48,6 +49,12 @@ public class NewsFragment extends BaseFragment{
         generateTestData();
         mAdapter = new NewsListAdapter(mNewsInfoList);
         mActivity = (NewsListActivity) getActivity();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+        });
     }
 
     @Override
