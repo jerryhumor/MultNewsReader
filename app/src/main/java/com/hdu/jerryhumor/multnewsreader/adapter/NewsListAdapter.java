@@ -24,6 +24,7 @@ import java.util.List;
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder> {
 
     private List<NewsInfo> mNewsInfoList;
+    private OnItemClickListener mOnItemViewClickListener;
 
     public NewsListAdapter(List<NewsInfo> newsInfoList){
         mNewsInfoList = newsInfoList;
@@ -36,7 +37,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         NewsInfo newsInfo = mNewsInfoList.get(position);
         switch (newsInfo.getSourceInt()){
             case NewsConstant.SOURCE_NETEASE:
@@ -53,6 +54,14 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         }
         holder.tvTime.setText(TimeUtil.getTimeFormatted(newsInfo.getTime(), TimeUtil.FORMAT_DEFAULT));
         holder.tvTitle.setText(newsInfo.getTitle());
+        if (mOnItemViewClickListener != null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnItemViewClickListener.onClickItem(position);
+                }
+            });
+        }
     }
 
     @Override
@@ -60,16 +69,26 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         return mNewsInfoList.size();
     }
 
+    public void setOnItemViewClickListener(OnItemClickListener onClickListener){
+        this.mOnItemViewClickListener = onClickListener;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvTitle, tvTime;
         ImageView ivLogo;
+        View itemView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tv_time);
-            tvTime = itemView.findViewById(R.id.tv_time);
-            ivLogo = itemView.findViewById(R.id.iv_logo);
+            this.tvTitle = itemView.findViewById(R.id.tv_time);
+            this.tvTime = itemView.findViewById(R.id.tv_time);
+            this.ivLogo = itemView.findViewById(R.id.iv_logo);
+            this.itemView = itemView;
         }
+    }
+
+    public interface OnItemClickListener{
+        void onClickItem(int position);
     }
 }

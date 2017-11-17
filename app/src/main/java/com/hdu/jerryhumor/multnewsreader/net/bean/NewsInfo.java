@@ -38,8 +38,8 @@ public class NewsInfo {
         if ("体育".equals(NewsConstant.TYPE_SPORT)){
             return NewsConstant.TYPE_SPORT;
         }
-        if ("社会".equals(NewsConstant.TYPE_SOCICAL)){
-            return NewsConstant.TYPE_SOCICAL;
+        if ("社会".equals(NewsConstant.TYPE_SOCIAL)){
+            return NewsConstant.TYPE_SOCIAL;
         }
         if ("娱乐".equals(NewsConstant.TYPE_FUN)){
             return NewsConstant.TYPE_FUN;

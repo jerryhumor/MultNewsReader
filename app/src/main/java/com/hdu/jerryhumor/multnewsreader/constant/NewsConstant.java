@@ -10,7 +10,7 @@ public class NewsConstant {
 
     public static final int TYPE_TECH = 0;                              // 类型科技
     public static final int TYPE_SPORT = 1;                             // 类型体育
-    public static final int TYPE_SOCICAL = 2;                           // 类型社会
+    public static final int TYPE_SOCIAL = 2;                            // 类型社会
     public static final int TYPE_FUN = 3;                               // 类型娱乐
     public static final int TYPE_CAR = 4;                               // 类型汽车
     public static final int TYPE_ART = 5;                               // 类型艺术
