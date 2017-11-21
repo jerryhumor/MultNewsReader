@@ -7,4 +7,5 @@ package com.hdu.jerryhumor.multnewsreader.constant;
 public class IntentExtra {
 
     public static final String URL = "url";
+    public static final String NEWS_ID = "news_id";
 }

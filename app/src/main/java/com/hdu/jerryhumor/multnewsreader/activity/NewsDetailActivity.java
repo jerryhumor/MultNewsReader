@@ -10,13 +10,17 @@ import com.hdu.jerryhumor.multnewsreader.R;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsConstant;
+import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
+import com.hdu.jerryhumor.multnewsreader.net.callback.BaseCallback;
+import com.hdu.jerryhumor.multnewsreader.util.ToastUtil;
 
 public class NewsDetailActivity extends BaseActivity {
 
     private WebView webView;
     private ProgressBar progressBar;
 
-    private String mUrl;
+    private NetworkConnector mNetworkConnector;
+    private int mNewsId;
 
     @Override
     protected int getResourceId() {
@@ -31,31 +35,32 @@ public class NewsDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        mNetworkConnector = NetworkConnector.getInstance();
         getNewsDetailUrl();
     }
 
     @Override
     protected void initEvent() {
         initWebView();
-        loadNews(mUrl);
+        loadNews(mNewsId);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        webView.onResume();
+        webView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        webView.onPause();
+        webView.onPause();
     }
 
     //获取前一个页面的url，之后可以还会再传新闻类型，来源等
     private void getNewsDetailUrl(){
         Intent newsInfoIntent = getIntent();
-        mUrl = newsInfoIntent.getStringExtra(IntentExtra.URL);
+        mNewsId = newsInfoIntent.getIntExtra(IntentExtra.NEWS_ID, 0);
     }
 
     //初始化 WebView
@@ -64,29 +69,42 @@ public class NewsDetailActivity extends BaseActivity {
     }
 
     //载入数据
-    private void loadNews(String url){
-        //todo 子线程获取数据 主线程更新
+    private void loadNews(int newsId){
         showProgressBar();
-        new Thread(new Runnable() {
+        mNetworkConnector.getNewsDetail(newsId, new BaseCallback<String>() {
             @Override
-            public void run() {
-                try{
-                    Thread.sleep(1000);
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+            public void onNetworkError(Exception e) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         hideProgressBar();
-                        String content = NewsApi.TEST_JSON_NEWS_DETAIL;
-                        webView.loadData(content, "text/html; charset=utf-8", "utf-8");
+                        ToastUtil.showToast(NewsDetailActivity.this, "网络错误");
                     }
                 });
             }
-        }).start();
 
+            @Override
+            public void onFailed(String error) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideProgressBar();
+                        ToastUtil.showToast(NewsDetailActivity.this, "获取失败");
+                    }
+                });
+            }
+
+            @Override
+            public void onSuccess(final String data) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideProgressBar();
+                        webView.loadData(data, "text/html; charset=utf-8", "utf-8");
+                    }
+                });
+            }
+        });
     }
 
     private void showProgressBar(){

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -13,8 +14,12 @@ import com.hdu.jerryhumor.multnewsreader.activity.NewsListActivity;
 import com.hdu.jerryhumor.multnewsreader.adapter.NewsListAdapter;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
+import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
 import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfo;
 import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfoResponse;
+import com.hdu.jerryhumor.multnewsreader.net.callback.NewsCallback;
+import com.hdu.jerryhumor.multnewsreader.util.JLog;
+import com.hdu.jerryhumor.multnewsreader.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +40,10 @@ public class NewsFragment extends BaseFragment{
     private List<NewsInfo> mNewsInfoList;
     private NewsListActivity mActivity;
     private LinearLayoutManager mLinearLayoutManager;
+    private NetworkConnector mNetworkConnector;
     private int mCurrentPage = 1;
     private final int DEFAULT_PAGE_SIZE = 10;
+    private boolean mIsLastPage = false;
 
     @Override
     int getResourceId() {
@@ -52,9 +59,9 @@ public class NewsFragment extends BaseFragment{
     @Override
     void initData() {
         mNewsInfoList = new ArrayList<>();
-        generateTestData();
         mAdapter = new NewsListAdapter(mNewsInfoList);
         mActivity = (NewsListActivity) getActivity();
+        mNetworkConnector = NetworkConnector.getInstance();
     }
 
     @Override
@@ -62,6 +69,7 @@ public class NewsFragment extends BaseFragment{
         initRecyclerView();
         initSwipeRefreshLayout();
         solveRvSrlConflict();
+        loadDataFromNet(mCurrentPage, DEFAULT_PAGE_SIZE);
     }
 
     //设置页面访问的地址
@@ -74,7 +82,7 @@ public class NewsFragment extends BaseFragment{
         mAdapter.setOnItemViewClickListener(new NewsListAdapter.OnItemClickListener() {
             @Override
             public void onClickItem(int position) {
-                startNewsDetailActivity(mNewsInfoList.get(position).getUrl());
+                startNewsDetailActivity(mNewsInfoList.get(position).getNewsId());
             }
         });
         rvNewsList.setLayoutManager(mLinearLayoutManager);
@@ -85,7 +93,7 @@ public class NewsFragment extends BaseFragment{
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItemPosition = mLinearLayoutManager.findLastVisibleItemPosition();
                 if (lastVisibleItemPosition + 1 == mAdapter.getItemCount()) {
-                    //todo 联网获取下一批数据
+                    loadDataFromNet(++mCurrentPage, DEFAULT_PAGE_SIZE);
                 }
             }
         });
@@ -115,20 +123,73 @@ public class NewsFragment extends BaseFragment{
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //todo 下拉刷新数据
+                resetPage();
+                loadDataFromNet(mCurrentPage, DEFAULT_PAGE_SIZE);
             }
         });
     }
 
     //联网获取数据
-    private void loadDataFromNet(int pageNum, int pageSize, String token){
+    private void loadDataFromNet(int pageNum, int pageSize){
+        if (mIsLastPage){
+            ToastUtil.showToast(mActivity, "没有更多信息");
+        }else{
+            mNetworkConnector.getNews(pageNum, pageSize, new NewsCallback() {
+                @Override
+                public void onNetworkError() {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipeRefreshLayout.setRefreshing(false);
+                            ToastUtil.showToast(mActivity, "网络错误");
+                            JLog.w("net work error");
+                        }
+                    });
+                }
 
+                @Override
+                public void onFailed(String error) {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipeRefreshLayout.setRefreshing(false);
+                            ToastUtil.showToast(mActivity, "访问失败");
+                            JLog.w("get data error");
+                        }
+                    });
+                }
+
+                @Override
+                public void onSuccess(List<NewsInfo> newsInfoList, boolean isFirstPage, boolean isLastPage) {
+                    mIsLastPage = isLastPage;
+                    if (isFirstPage)
+                        mNewsInfoList.clear();
+
+                    for (NewsInfo newsInfo : newsInfoList){
+                        mNewsInfoList.add(newsInfo);
+                    }
+
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipeRefreshLayout.setRefreshing(false);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            });
+        }
     }
 
-    private void startNewsDetailActivity(String newsUrl){
+    private void startNewsDetailActivity(int newsId){
         Intent intent = new Intent(mActivity, NewsDetailActivity.class);
-        intent.putExtra(IntentExtra.URL, newsUrl);
+        intent.putExtra(IntentExtra.URL, newsId);
         startActivity(intent);
+    }
+
+    private void resetPage(){
+        mIsLastPage = false;
+        mCurrentPage = 1;
     }
 
 }

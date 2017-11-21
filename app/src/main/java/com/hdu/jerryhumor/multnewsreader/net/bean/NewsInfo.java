@@ -20,8 +20,8 @@ public class NewsInfo {
     private String source;                                      //新闻来源
     @SerializedName("time")
     private long time;                                          //新闻时间
-    @SerializedName("url")
-    private String url;                                         //新闻访问地址
+    @SerializedName("news_id")
+    private int newsId;                                         //新闻ID
 
     public String getTitle() {
         return title;
@@ -80,9 +80,7 @@ public class NewsInfo {
         return time;
     }
 
-    public String getUrl() {
-        return url;
+    public int getNewsId() {
+        return newsId;
     }
-
-
 }

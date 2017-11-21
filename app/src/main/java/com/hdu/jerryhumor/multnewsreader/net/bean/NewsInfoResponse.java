@@ -11,6 +11,8 @@ import java.util.List;
 public class NewsInfoResponse {
     @SerializedName("status")
     private String status;
+    @SerializedName("error")
+    private String error;
     @SerializedName("total_row")
     private int totalRow;
     @SerializedName("page_num")
@@ -26,6 +28,10 @@ public class NewsInfoResponse {
 
     public boolean isSuccess() {
         return "ok".equals(status);
+    }
+
+    public String getError() {
+        return error;
     }
 
     public List<NewsInfo> getNewsInfoList() {
