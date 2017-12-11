@@ -1,7 +1,6 @@
 package com.hdu.jerryhumor.multnewsreader.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 
 import com.hdu.jerryhumor.multnewsreader.R;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsConstant;
+import com.hdu.jerryhumor.multnewsreader.constant.NewsSource;
 import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfo;
 import com.hdu.jerryhumor.multnewsreader.util.TimeUtil;
 
@@ -39,20 +39,20 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         NewsInfo newsInfo = mNewsInfoList.get(position);
-        switch (newsInfo.getSourceInt()){
-            case NewsConstant.SOURCE_NETEASE:
+        switch (newsInfo.getSource()){
+            case NewsSource.CODE_NETEASE:
                 holder.ivLogo.setImageResource(R.mipmap.logo_netease);
                 break;
-            case NewsConstant.SOURCE_SINA:
+            case NewsSource.CODE_SINA:
                 holder.ivLogo.setImageResource(R.mipmap.logo_sina);
                 break;
-            case NewsConstant.SOURCE_ZHIHU:
+            case NewsSource.CODE_ZHIHU:
                 holder.ivLogo.setImageResource(R.mipmap.logo_zhihu);
                 break;
             default:
                 break;
         }
-        holder.tvTime.setText(TimeUtil.getTimeFormatted(newsInfo.getTime(), TimeUtil.FORMAT_DEFAULT));
+        holder.tvTime.setText(TimeUtil.getTimeFormatted(newsInfo.getNewsTime(), TimeUtil.FORMAT_DEFAULT));
         holder.tvTitle.setText(newsInfo.getTitle());
         if (mOnItemViewClickListener != null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.tvTitle = itemView.findViewById(R.id.tv_time);
+            this.tvTitle = itemView.findViewById(R.id.tv_title);
             this.tvTime = itemView.findViewById(R.id.tv_time);
             this.ivLogo = itemView.findViewById(R.id.iv_logo);
             this.itemView = itemView;

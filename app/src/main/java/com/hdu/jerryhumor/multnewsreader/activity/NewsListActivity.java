@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 
 import com.hdu.jerryhumor.multnewsreader.R;
 import com.hdu.jerryhumor.multnewsreader.activity.BaseActivity;
+import com.hdu.jerryhumor.multnewsreader.constant.NewsType;
 import com.hdu.jerryhumor.multnewsreader.fragment.NewsFragment;
 
 import java.util.ArrayList;
@@ -18,8 +19,7 @@ public class NewsListActivity extends BaseActivity{
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    private List<Fragment> mNewsPagerList;
-    private List<String> mNewsTitleList;
+    private List<NewsFragment> mNewsPagerList;
 
     @Override
     protected int getResourceId() {
@@ -35,25 +35,24 @@ public class NewsListActivity extends BaseActivity{
     @Override
     protected void initData() {
         mNewsPagerList = new ArrayList<>();
-        for (int i = 0; i < 5; i++){
-            mNewsPagerList.add(new NewsFragment());
-        }
-        initNewsTitle();
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_LATEST));
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_TECH));
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_SPORT));
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_SOCIAL));
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_FUN));
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_CAR));
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_ART));
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_FINANCE));
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_EDUCATE));
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_WAR));
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_POLITICS));
+        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_UNKNOWN));
     }
 
     @Override
     protected void initEvent() {
         viewPager.setAdapter(new MyFragmentAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    private void initNewsTitle(){
-        mNewsTitleList = new ArrayList<>();
-        mNewsTitleList.add("IT");
-        mNewsTitleList.add("体育");
-        mNewsTitleList.add("经济");
-        mNewsTitleList.add("社会");
-        mNewsTitleList.add("娱乐");
     }
 
     private class MyFragmentAdapter extends FragmentPagerAdapter{
@@ -74,7 +73,7 @@ public class NewsListActivity extends BaseActivity{
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mNewsTitleList.get(position);
+            return mNewsPagerList.get(position).getTitle();
         }
     }
 }

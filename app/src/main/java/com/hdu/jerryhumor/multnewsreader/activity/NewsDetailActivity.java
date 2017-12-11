@@ -2,6 +2,8 @@ package com.hdu.jerryhumor.multnewsreader.activity;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
@@ -43,6 +45,7 @@ public class NewsDetailActivity extends BaseActivity {
     protected void initEvent() {
         initWebView();
         loadNews(mNewsId);
+
     }
 
     @Override

@@ -15,11 +15,13 @@ public class NewsInfo {
     @SerializedName("title")
     private String title;                                       //新闻标题
     @SerializedName("type")
-    private String type;                                        //新闻类型
+    private int type;                                           //新闻类型
     @SerializedName("source")
-    private String source;                                      //新闻来源
-    @SerializedName("time")
-    private long time;                                          //新闻时间
+    private int source;                                         //新闻来源
+    @SerializedName("news_time")
+    private long newsTime;                                      //新闻自身时间
+    @SerializedName("create_time")
+    private long createTime;                                    //新闻爬取时间
     @SerializedName("news_id")
     private int newsId;                                         //新闻ID
 
@@ -27,57 +29,20 @@ public class NewsInfo {
         return title;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public int getTypeInt(){
-        if ("科技".equals(NewsConstant.TYPE_TECH)){
-            return NewsConstant.TYPE_TECH;
-        }
-        if ("体育".equals(NewsConstant.TYPE_SPORT)){
-            return NewsConstant.TYPE_SPORT;
-        }
-        if ("社会".equals(NewsConstant.TYPE_SOCIAL)){
-            return NewsConstant.TYPE_SOCIAL;
-        }
-        if ("娱乐".equals(NewsConstant.TYPE_FUN)){
-            return NewsConstant.TYPE_FUN;
-        }
-        if ("汽车".equals(NewsConstant.TYPE_CAR)){
-            return NewsConstant.TYPE_CAR;
-        }
-        if ("艺术".equals(NewsConstant.TYPE_ART)){
-            return NewsConstant.TYPE_ART;
-        }
-        if ("金融".equals(NewsConstant.TYPE_FINANCE)){
-            return NewsConstant.TYPE_FINANCE;
-        }
-        if ("教育".equals(NewsConstant.TYPE_EDUCATE)){
-            return NewsConstant.TYPE_EDUCATE;
-        }
-        return NewsConstant.TYPE_UNKNOWN;
-    }
-
-    public String getSource() {
+    public int getSource() {
         return source;
     }
 
-    public int getSourceInt(){
-        if ("网易".equals(source)){
-            return NewsConstant.SOURCE_NETEASE;
-        }
-        if ("新浪".equals(source)){
-            return NewsConstant.SOURCE_SINA;
-        }
-        if ("知乎".equals(source)){
-            return NewsConstant.SOURCE_ZHIHU;
-        }
-        return NewsConstant.SOURCE_UNKNOWN;
+    public long getNewsTime() {
+        return newsTime;
     }
 
-    public long getTime() {
-        return time;
+    public long getCreateTime() {
+        return createTime;
     }
 
     public int getNewsId() {

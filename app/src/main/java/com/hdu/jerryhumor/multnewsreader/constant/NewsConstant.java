@@ -8,6 +8,7 @@ package com.hdu.jerryhumor.multnewsreader.constant;
 
 public class NewsConstant {
 
+    public static final int TYPE_LATEST = -1;                           // 类型最新
     public static final int TYPE_TECH = 0;                              // 类型科技
     public static final int TYPE_SPORT = 1;                             // 类型体育
     public static final int TYPE_SOCIAL = 2;                            // 类型社会
