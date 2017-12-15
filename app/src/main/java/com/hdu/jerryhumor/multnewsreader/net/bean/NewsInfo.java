@@ -1,7 +1,6 @@
 package com.hdu.jerryhumor.multnewsreader.net.bean;
 
 import com.google.gson.annotations.SerializedName;
-import com.hdu.jerryhumor.multnewsreader.constant.NewsConstant;
 
 /**
  * Created by jerryhumor on 2017/11/9.

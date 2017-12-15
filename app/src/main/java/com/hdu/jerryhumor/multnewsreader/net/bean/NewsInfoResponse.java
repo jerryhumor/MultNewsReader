@@ -57,4 +57,5 @@ public class NewsInfoResponse {
     public boolean isLastPge() {
         return isLastPge;
     }
+
 }

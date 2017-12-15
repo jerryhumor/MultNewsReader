@@ -2,16 +2,12 @@ package com.hdu.jerryhumor.multnewsreader.activity;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.hdu.jerryhumor.multnewsreader.R;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
-import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
-import com.hdu.jerryhumor.multnewsreader.constant.NewsConstant;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
 import com.hdu.jerryhumor.multnewsreader.net.callback.BaseCallback;
 import com.hdu.jerryhumor.multnewsreader.util.ToastUtil;

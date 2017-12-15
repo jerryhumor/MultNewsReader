@@ -12,6 +12,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -19,7 +20,12 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab_layout_type"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"/>
+                android:layout_height="50dp"
+                android:background="@color/colorPrimary"
+                app:tabSelectedTextColor="@android:color/white"
+                app:tabIndicatorColor="@android:color/white"
+                app:tabTextColor="#bbb"
+                app:tabMode="scrollable" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/view_pager_news"
@@ -37,7 +43,6 @@
         android:layout_gravity="start"
         app:menu="@menu/menu_nav"
         app:headerLayout="@layout/nav_header"/>
-
 
 </android.support.v4.widget.DrawerLayout>
 

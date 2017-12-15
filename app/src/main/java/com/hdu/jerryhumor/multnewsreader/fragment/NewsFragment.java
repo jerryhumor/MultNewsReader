@@ -13,7 +13,6 @@ import com.hdu.jerryhumor.multnewsreader.activity.NewsListActivity;
 import com.hdu.jerryhumor.multnewsreader.adapter.NewsListAdapter;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
-import com.hdu.jerryhumor.multnewsreader.constant.NewsConstant;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsType;
 import com.hdu.jerryhumor.multnewsreader.exchange.Transformer;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
@@ -101,7 +100,7 @@ public class NewsFragment extends BaseFragment{
             @Override
             public void onClickItem(int position) {
                 NewsInfo newsInfo = mNewsInfoList.get(position);
-//                mUserProperties.addProperties(newsInfo.getType());
+                mUserProperties.addProperties(newsInfo.getType());
                 startNewsDetailActivity(newsInfo.getNewsId());
             }
         });

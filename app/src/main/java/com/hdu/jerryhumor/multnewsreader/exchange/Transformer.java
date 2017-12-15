@@ -1,6 +1,5 @@
 package com.hdu.jerryhumor.multnewsreader.exchange;
 
-import com.hdu.jerryhumor.multnewsreader.constant.NewsConstant;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsSource;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsType;
 import com.hdu.jerryhumor.multnewsreader.constant.PropertiesTag;

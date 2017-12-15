@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hdu.jerryhumor.multnewsreader.R;
-import com.hdu.jerryhumor.multnewsreader.constant.NewsConstant;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsSource;
 import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfo;
 import com.hdu.jerryhumor.multnewsreader.util.TimeUtil;

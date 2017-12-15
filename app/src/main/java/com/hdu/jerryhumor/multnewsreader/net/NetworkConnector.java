@@ -6,7 +6,6 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
 import com.hdu.jerryhumor.multnewsreader.net.bean.ArticleResponse;
-import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfo;
 import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfoResponse;
 import com.hdu.jerryhumor.multnewsreader.net.callback.BaseCallback;
 import com.hdu.jerryhumor.multnewsreader.net.callback.NewsCallback;
