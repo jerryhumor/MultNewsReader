@@ -2,23 +2,35 @@ package com.hdu.jerryhumor.multnewsreader.activity;
 
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.hdu.jerryhumor.multnewsreader.R;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
+import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
 import com.hdu.jerryhumor.multnewsreader.net.callback.BaseCallback;
+import com.hdu.jerryhumor.multnewsreader.util.JLog;
 import com.hdu.jerryhumor.multnewsreader.util.ToastUtil;
 
 public class NewsDetailActivity extends BaseActivity {
 
     private WebView webView;
     private ProgressBar progressBar;
+    private Toolbar toolbar;
 
     private NetworkConnector mNetworkConnector;
     private int mNewsId;
+    private String mTitle;
+    private int mSource;
 
     @Override
     protected int getResourceId() {
@@ -29,6 +41,7 @@ public class NewsDetailActivity extends BaseActivity {
     protected void initView() {
         webView = findViewById(R.id.web_view);
         progressBar = findViewById(R.id.progress_bar);
+        toolbar = findViewById(R.id.toolbar);
     }
 
     @Override
@@ -40,8 +53,16 @@ public class NewsDetailActivity extends BaseActivity {
     @Override
     protected void initEvent() {
         initWebView();
-        loadNews(mNewsId);
+        initToolbar();
+//        loadNews(mNewsId);
+        loadFromLocal();
 
+
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
     }
 
     @Override
@@ -56,15 +77,47 @@ public class NewsDetailActivity extends BaseActivity {
         webView.onPause();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_item_keep:
+                keepArticle();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
     //获取前一个页面的url，之后可以还会再传新闻类型，来源等
     private void getNewsDetailUrl(){
         Intent newsInfoIntent = getIntent();
         mNewsId = newsInfoIntent.getIntExtra(IntentExtra.NEWS_ID, 0);
+        mTitle = newsInfoIntent.getStringExtra(IntentExtra.NEWS_TITLE);
+        mSource = newsInfoIntent.getIntExtra(IntentExtra.NEWS_SOURCE, 0);
     }
 
     //初始化 WebView
     private void initWebView(){
 
+    }
+
+    //初始化Toolbar
+    private void initToolbar(){
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastUtil.showToast(NewsDetailActivity.this, "hahah");
+            }
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     //载入数据
@@ -104,6 +157,15 @@ public class NewsDetailActivity extends BaseActivity {
                 });
             }
         });
+    }
+
+    private void keepArticle(){
+        showToast("收藏成功");
+    }
+
+    private void loadFromLocal(){
+        hideProgressBar();
+        webView.loadData(NewsApi.TEST_JSON_NEWS_DETAIL, "text/html; charset=utf-8", "utf-8");
     }
 
     private void showProgressBar(){

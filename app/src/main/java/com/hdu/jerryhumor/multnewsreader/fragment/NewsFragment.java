@@ -72,6 +72,7 @@ public class NewsFragment extends BaseFragment{
         mActivity = (NewsListActivity) getActivity();
         mNetworkConnector = NetworkConnector.getInstance();
         mUserProperties = new UserProperties(mActivity);
+        generateTestData();
     }
 
     @Override
@@ -79,7 +80,7 @@ public class NewsFragment extends BaseFragment{
         initRecyclerView();
         initSwipeRefreshLayout();
         solveRvSrlConflict();
-        loadDataFromNet(mCurrentPage, DEFAULT_PAGE_SIZE, mLastUpdateTime);
+//        loadDataFromNet(mCurrentPage, DEFAULT_PAGE_SIZE, mLastUpdateTime);
     }
 
     /**
@@ -101,7 +102,7 @@ public class NewsFragment extends BaseFragment{
             public void onClickItem(int position) {
                 NewsInfo newsInfo = mNewsInfoList.get(position);
                 mUserProperties.addProperties(newsInfo.getType());
-                startNewsDetailActivity(newsInfo.getNewsId());
+                startNewsDetailActivity(newsInfo.getNewsId(), newsInfo.getTitle(), newsInfo.getType());
             }
         });
         rvNewsList.setLayoutManager(mLinearLayoutManager);
@@ -122,7 +123,7 @@ public class NewsFragment extends BaseFragment{
     private void generateTestData(){
         Gson gson = new Gson();
         NewsInfoResponse response = gson.fromJson(NewsApi.TEST_JSON_NEWS_INFO, NewsInfoResponse.class);
-        mNewsInfoList = response.getNewsInfoList();
+        mNewsInfoList.addAll(response.getNewsInfoList());
     }
 
     //用于解决 RecyclerView 和 SwipeRefreshLayout 滑动冲突
@@ -158,7 +159,7 @@ public class NewsFragment extends BaseFragment{
         if (mIsLastPage){
             ToastUtil.showToast(mActivity, "没有更多信息");
         }else{
-            mNetworkConnector.getNews(pageNum, pageSize, lastUpdateTime, new NewsCallback() {
+            mNetworkConnector.getNews(pageNum, pageSize, lastUpdateTime, mType, new NewsCallback() {
                 @Override
                 public void onNetworkError() {
                     mActivity.runOnUiThread(new Runnable() {
@@ -248,9 +249,11 @@ public class NewsFragment extends BaseFragment{
      * 跳转到详细新闻页
      * @param newsId
      */
-    private void startNewsDetailActivity(int newsId){
+    private void startNewsDetailActivity(final int newsId, final String title, final int type){
         Intent intent = new Intent(mActivity, NewsDetailActivity.class);
-        intent.putExtra(IntentExtra.URL, newsId);
+        intent.putExtra(IntentExtra.NEWS_ID, newsId);
+        intent.putExtra(IntentExtra.NEWS_TITLE, title);
+        intent.putExtra(IntentExtra.NEWS_SOURCE, type);
         startActivity(intent);
     }
 

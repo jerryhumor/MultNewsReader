@@ -11,14 +11,18 @@
         android:roundIcon="@mipmap/ic_news"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.NewsListActivity">
+        <activity
+            android:name=".activity.NewsListActivity"
+            android:label="@string/news_list_activity_label">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.NewsDetailActivity"></activity>
+        <activity
+            android:name=".activity.NewsDetailActivity"
+            android:label="@string/news_detail_activity_label"></activity>
     </application>
 
 </manifest>

@@ -5,9 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
 import com.hdu.jerryhumor.multnewsreader.R;
-import com.hdu.jerryhumor.multnewsreader.activity.BaseActivity;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsType;
 import com.hdu.jerryhumor.multnewsreader.fragment.NewsFragment;
 
@@ -18,6 +18,7 @@ public class NewsListActivity extends BaseActivity{
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private Toolbar toolbar;
 
     private List<NewsFragment> mNewsPagerList;
 
@@ -30,6 +31,7 @@ public class NewsListActivity extends BaseActivity{
     protected void initView() {
         tabLayout = findViewById(R.id.tab_layout_type);
         viewPager = findViewById(R.id.view_pager_news);
+        toolbar = findViewById(R.id.toolbar);
     }
 
     @Override
@@ -53,6 +55,7 @@ public class NewsListActivity extends BaseActivity{
     protected void initEvent() {
         viewPager.setAdapter(new MyFragmentAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
+        setSupportActionBar(toolbar);
     }
 
     private class MyFragmentAdapter extends FragmentPagerAdapter{

@@ -2,4 +2,7 @@
     <string name="app_name">默阅</string>
 
     <string name="nav_title_setting">设置</string>
+    <string name="news_list_activity_label">默阅</string>
+    <string name="news_detail_activity_label">新闻</string>
+    <string name="keep">收藏</string>
 </resources>

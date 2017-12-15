@@ -49,8 +49,8 @@ public class NetworkConnector {
     }
 
     //获取新闻列表
-    public void getNews(int pageNum, int pageSize, long lastUpdateTime, final NewsCallback callback){
-        String url = NewsApi.URL_GET_NEWS_LIST + pageNum + "-" + pageSize + "-" + lastUpdateTime;
+    public void getNews(int pageNum, int pageSize, long lastUpdateTime, final int newsType, final NewsCallback callback){
+        String url = NewsApi.URL_GET_NEWS_LIST + pageNum + "-" + pageSize + "-" + newsType + "-" + lastUpdateTime;
         Log.i(TAG, "get news, url: " + url);
         Request request = new Request.Builder().url(url).build();
         Call call = mOkHttpClient.newCall(request);
