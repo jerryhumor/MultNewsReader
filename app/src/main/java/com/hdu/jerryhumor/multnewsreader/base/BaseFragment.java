@@ -1,4 +1,4 @@
-package com.hdu.jerryhumor.multnewsreader.fragment;
+package com.hdu.jerryhumor.multnewsreader.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

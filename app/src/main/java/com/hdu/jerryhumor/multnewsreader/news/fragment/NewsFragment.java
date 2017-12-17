@@ -1,4 +1,4 @@
-package com.hdu.jerryhumor.multnewsreader.fragment;
+package com.hdu.jerryhumor.multnewsreader.news.fragment;
 
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,8 +8,9 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.hdu.jerryhumor.multnewsreader.R;
-import com.hdu.jerryhumor.multnewsreader.activity.NewsDetailActivity;
-import com.hdu.jerryhumor.multnewsreader.activity.NewsListActivity;
+import com.hdu.jerryhumor.multnewsreader.base.BaseFragment;
+import com.hdu.jerryhumor.multnewsreader.news.activity.NewsDetailActivity;
+import com.hdu.jerryhumor.multnewsreader.news.activity.NewsListActivity;
 import com.hdu.jerryhumor.multnewsreader.adapter.NewsListAdapter;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
@@ -33,7 +34,7 @@ import java.util.List;
  * 新闻列表碎片
  */
 
-public class NewsFragment extends BaseFragment{
+public class NewsFragment extends BaseFragment {
 
     private final int DEFAULT_PAGE_SIZE = 10;
 

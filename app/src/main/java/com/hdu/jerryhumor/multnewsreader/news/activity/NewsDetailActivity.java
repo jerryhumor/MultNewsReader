@@ -1,10 +1,8 @@
-package com.hdu.jerryhumor.multnewsreader.activity;
+package com.hdu.jerryhumor.multnewsreader.news.activity;
 
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,11 +12,12 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.hdu.jerryhumor.multnewsreader.R;
+import com.hdu.jerryhumor.multnewsreader.base.BaseActivity;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
+import com.hdu.jerryhumor.multnewsreader.keep.database.DBHelper;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
 import com.hdu.jerryhumor.multnewsreader.net.callback.BaseCallback;
-import com.hdu.jerryhumor.multnewsreader.util.JLog;
 import com.hdu.jerryhumor.multnewsreader.util.ToastUtil;
 
 public class NewsDetailActivity extends BaseActivity {
@@ -28,6 +27,7 @@ public class NewsDetailActivity extends BaseActivity {
     private Toolbar toolbar;
 
     private NetworkConnector mNetworkConnector;
+    private DBHelper mDBHelper;
     private int mNewsId;
     private String mTitle;
     private int mSource;
@@ -47,6 +47,7 @@ public class NewsDetailActivity extends BaseActivity {
     @Override
     protected void initData() {
         mNetworkConnector = NetworkConnector.getInstance();
+        mDBHelper = new DBHelper(this, null);
         getNewsDetailUrl();
     }
 
@@ -160,7 +161,11 @@ public class NewsDetailActivity extends BaseActivity {
     }
 
     private void keepArticle(){
-        showToast("收藏成功");
+        if (mDBHelper.insertKeepItem(mTitle, mSource, mNewsId) < 1){
+            showToast("收藏失败");
+        }else{
+            showToast("收藏成功");
+        }
     }
 
     private void loadFromLocal(){

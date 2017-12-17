@@ -5,4 +5,5 @@
     <color name="colorAccent">#F30007</color>
 
     <color name="backgroundGray">#bfbfbf</color>
+    <color name="newsListBackground">#ffffff</color>
 </resources>

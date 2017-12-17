@@ -32,5 +32,5 @@ public class NewsType {
     public static final String NAME_EDUCATE = "教育";                     // 名称类型教育
     public static final String NAME_WAR = "战争";                         // 名称类型军事
     public static final String NAME_POLITICS = "政治";                    // 名称类型政治
-    public static final String NAME_UNKNOWN  = "位置";                    // 名称类型未知
+    public static final String NAME_UNKNOWN  = "未知";                    // 名称类型未知
 }

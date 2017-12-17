@@ -1,4 +1,4 @@
-package com.hdu.jerryhumor.multnewsreader.activity;
+package com.hdu.jerryhumor.multnewsreader.news.activity;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,13 +8,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
 import com.hdu.jerryhumor.multnewsreader.R;
+import com.hdu.jerryhumor.multnewsreader.base.BaseActivity;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsType;
-import com.hdu.jerryhumor.multnewsreader.fragment.NewsFragment;
+import com.hdu.jerryhumor.multnewsreader.news.fragment.NewsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsListActivity extends BaseActivity{
+public class NewsListActivity extends BaseActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
