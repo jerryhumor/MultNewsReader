@@ -7,7 +7,7 @@ import com.hdu.jerryhumor.multnewsreader.constant.PropertiesTag;
 /**
  * Created by hanjianhao on 2017/12/11.
  *
- * 用于转换一些东西 如新闻类型等等
+ * 用于转换一些东西 如新闻类型的代号和名称转换等
  */
 
 public class Transformer {

@@ -21,6 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"/>
 
-    <!--侧滑删除的list-->
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        android:id="@+id/smrv_keep_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
