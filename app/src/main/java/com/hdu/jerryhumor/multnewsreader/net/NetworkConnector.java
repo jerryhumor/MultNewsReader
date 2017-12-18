@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
+import com.hdu.jerryhumor.multnewsreader.login.bean.LoginResponse;
 import com.hdu.jerryhumor.multnewsreader.net.bean.ArticleResponse;
 import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfoResponse;
 import com.hdu.jerryhumor.multnewsreader.net.callback.BaseCallback;
@@ -95,6 +96,67 @@ public class NetworkConnector {
                     callback.onSuccess(articleResponse.getContent());
                 }else{
                     callback.onFailed(articleResponse.getError());
+                }
+            }
+        });
+    }
+
+    /**
+     * 登录接口
+     * @param userName                  用户名
+     * @param password                  加密后的密码
+     * @param callback
+     */
+    public void login(final String userName, final String password, final BaseCallback<LoginResponse> callback){
+        String url = NewsApi.URL_LOGIN + userName + "-" + password;
+        Log.i(TAG, "login, url: " + url);
+        Request request = new Request.Builder().url(url).build();
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onNetworkError(e);
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                JLog.i(string);
+                LoginResponse loginResponse = mGson.fromJson(string, LoginResponse.class);
+                if (loginResponse.isSuccess()){
+                    callback.onSuccess(loginResponse);
+                }else{
+                    callback.onFailed(loginResponse.getError());
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 注册接口
+     * @param userName                  用户名
+     * @param password                  加密后的密码
+     * @param callback
+     */
+    public void register(final String userName, final String password, final BaseCallback<String> callback){
+        String url = NewsApi.URL_REGISTER + userName + "-" + password;
+        Log.i(TAG, "register, url: " + url);
+        Request request = new Request.Builder().url(url).build();
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onNetworkError(e);
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                JLog.i(string);
+                LoginResponse loginResponse = mGson.fromJson(string, LoginResponse.class);
+                if (loginResponse.isSuccess()){
+                    callback.onSuccess(null);
+                }else{
+                    callback.onFailed(loginResponse.getError());
                 }
             }
         });
