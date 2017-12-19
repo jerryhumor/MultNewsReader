@@ -160,7 +160,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private void setLoginSuccessResult(String userName){
         Intent intent = new Intent();
         intent.putExtra(IntentExtra.USER_NAME, userName);
-        setResult(RESULT_OK);
+        setResult(RESULT_OK, intent);
     }
 
 

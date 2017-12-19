@@ -139,8 +139,8 @@ public class NetworkConnector {
      * @param password                  加密后的密码
      * @param callback
      */
-    public void register(final String userName, final String password, final BaseCallback<RegisterResponse> callback){
-        String url = NewsApi.URL_REGISTER + userName + "-" + password;
+    public void register(final String account, final String userName, final String password, final BaseCallback<RegisterResponse> callback){
+        String url = NewsApi.URL_REGISTER + account + "-" + password + "-" + userName;
         Log.i(TAG, "register, url: " + url);
         Request request = new Request.Builder().url(url).build();
         Call call = mOkHttpClient.newCall(request);

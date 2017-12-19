@@ -17,7 +17,7 @@ import com.hdu.jerryhumor.multnewsreader.register.bean.RegisterResponse;
 public class RegisterActivity extends BaseActivity implements View.OnClickListener{
 
     private Toolbar toolbar;
-    private EditText etUserName, etPassword;
+    private EditText etUserName, etPassword, etAccount;
     private Button btnRegister;
 
     private NetworkConnector mNetworkConnector;
@@ -30,6 +30,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void initView() {
         toolbar = findViewById(R.id.toolbar);
+        etAccount = findViewById(R.id.et_account);
         etUserName = findViewById(R.id.et_user_name);
         etPassword = findViewById(R.id.et_password);
         btnRegister = findViewById(R.id.btn_register);
@@ -67,6 +68,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * 注册
      */
     private void register(){
+        String account = etAccount.getText().toString();
         String userName = etUserName.getText().toString();
         String password = etPassword.getText().toString();
         boolean userInfoValid = true;
@@ -79,7 +81,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             userInfoValid = false;
         }
         if (userInfoValid){
-            mNetworkConnector.register(userName, password, new BaseCallback<RegisterResponse>() {
+            mNetworkConnector.register(account, userName, password, new BaseCallback<RegisterResponse>() {
                 @Override
                 public void onNetworkError(Exception e) {
                     runOnUiThread(new Runnable() {
@@ -119,8 +121,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * 返回结果
      */
     private void setActivityResult(String userName){
-        setResult(RESULT_OK);
         Intent intent = new Intent();
         intent.putExtra(IntentExtra.USER_NAME, userName);
+        setResult(RESULT_OK, intent);
     }
 }
