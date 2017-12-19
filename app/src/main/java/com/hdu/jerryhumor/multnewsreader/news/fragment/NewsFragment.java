@@ -56,18 +56,18 @@ public class NewsFragment extends BaseFragment {
     private boolean mIsLastPage = false;
 
     @Override
-    int getResourceId() {
+    protected int getResourceId() {
         return R.layout.fragment_news_pager;
     }
 
     @Override
-    void initView(View view) {
+    protected void initView(View view) {
         rvNewsList = view.findViewById(R.id.rv_news_list);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
     }
 
     @Override
-    void initData() {
+    protected void initData() {
         mNewsInfoList = new ArrayList<>();
         mAdapter = new NewsListAdapter(mNewsInfoList);
         mActivity = (NewsListActivity) getActivity();
@@ -77,7 +77,7 @@ public class NewsFragment extends BaseFragment {
     }
 
     @Override
-    void initEvent() {
+    protected void initEvent() {
         initRecyclerView();
         initSwipeRefreshLayout();
         solveRvSrlConflict();

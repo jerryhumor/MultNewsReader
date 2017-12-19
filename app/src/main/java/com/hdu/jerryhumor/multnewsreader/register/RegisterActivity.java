@@ -1,4 +1,4 @@
-package com.hdu.jerryhumor.multnewsreader.login;
+package com.hdu.jerryhumor.multnewsreader.register;
 
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
@@ -10,25 +10,21 @@ import android.widget.EditText;
 import com.hdu.jerryhumor.multnewsreader.R;
 import com.hdu.jerryhumor.multnewsreader.base.BaseActivity;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
-import com.hdu.jerryhumor.multnewsreader.login.bean.LoginResponse;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
 import com.hdu.jerryhumor.multnewsreader.base.BaseCallback;
-import com.hdu.jerryhumor.multnewsreader.register.RegisterActivity;
+import com.hdu.jerryhumor.multnewsreader.register.bean.RegisterResponse;
 
-/**
- * A login screen that offers login via email/password.
- */
-public class LoginActivity extends BaseActivity implements View.OnClickListener{
+public class RegisterActivity extends BaseActivity implements View.OnClickListener{
 
     private Toolbar toolbar;
     private EditText etUserName, etPassword;
-    private Button btnLogin, btnRegister;
+    private Button btnRegister;
 
     private NetworkConnector mNetworkConnector;
 
     @Override
     protected int getResourceId() {
-        return R.layout.activity_login;
+        return R.layout.activity_register;
     }
 
     @Override
@@ -36,7 +32,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         toolbar = findViewById(R.id.toolbar);
         etUserName = findViewById(R.id.et_user_name);
         etPassword = findViewById(R.id.et_password);
-        btnLogin = findViewById(R.id.btn_login);
         btnRegister = findViewById(R.id.btn_register);
     }
 
@@ -47,47 +42,31 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void initEvent() {
-        btnLogin.setOnClickListener(this);
-        btnRegister.setOnClickListener(this);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(RESULT_CANCELED);
                 finish();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        btnRegister.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_login:
-                login();
-                break;
             case R.id.btn_register:
-                startRegisterActivity();
+                register();
                 break;
             default:break;
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == IntentExtra.REGISTER_ACTIVITY && resultCode == RESULT_OK){
-            String userName = data.getStringExtra(IntentExtra.USER_NAME);
-            setLoginInfo(userName);
-            setLoginSuccessResult(userName);
-            finish();
-        }
-    }
-
     /**
-     * 登录
+     * 注册
      */
-    private void login(){
+    private void register(){
         String userName = etUserName.getText().toString();
         String password = etPassword.getText().toString();
         boolean userInfoValid = true;
@@ -100,7 +79,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             userInfoValid = false;
         }
         if (userInfoValid){
-            mNetworkConnector.login(userName, password, new BaseCallback<LoginResponse>() {
+            mNetworkConnector.register(userName, password, new BaseCallback<RegisterResponse>() {
                 @Override
                 public void onNetworkError(Exception e) {
                     runOnUiThread(new Runnable() {
@@ -122,12 +101,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 }
 
                 @Override
-                public void onSuccess(final LoginResponse data) {
+                public void onSuccess(final RegisterResponse data) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            setLoginInfo(data.getUserName());
-                            setLoginSuccessResult(data.getUserName());
+                            showToast("注册成功");
+                            setActivityResult(data.getUserName());
                             finish();
                         }
                     });
@@ -137,34 +116,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     }
 
     /**
-     * 开启注册活动
+     * 返回结果
      */
-    private void startRegisterActivity(){
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivityForResult(intent, IntentExtra.REGISTER_ACTIVITY);
-    }
-
-    /**
-     * 登录信息写入内存
-     * @param userName
-     */
-    private void setLoginInfo(String userName){
-        UserInfo userInfo = UserInfo.getInstance();
-        userInfo.setUserName(userName);
-    }
-
-    /**
-     * 设置登录结果
-     * @param userName
-     */
-    private void setLoginSuccessResult(String userName){
+    private void setActivityResult(String userName){
+        setResult(RESULT_OK);
         Intent intent = new Intent();
         intent.putExtra(IntentExtra.USER_NAME, userName);
-        setResult(RESULT_OK);
     }
-
-
-
-
 }
-

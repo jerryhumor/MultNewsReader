@@ -49,6 +49,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
                 holder.ivLogo.setImageResource(R.mipmap.logo_zhihu);
                 break;
             default:
+                holder.ivLogo.setImageResource(R.mipmap.logo_unknown);
                 break;
         }
         holder.tvTime.setText(TimeUtil.getTimeFormatted(newsInfo.getNewsTime(), TimeUtil.FORMAT_DEFAULT));

@@ -37,7 +37,7 @@ public class Database {
                         ID + " integer primary key autoincrement," +
                         TITLE + " varchar not null," +
                         SOURCE + " integer not null," +
-                        NEWS_ID + "integer unique not null," +
+                        NEWS_ID + " integer unique not null," +
                         CREATE_TIME + " integer not null" +
                         ");";
     }

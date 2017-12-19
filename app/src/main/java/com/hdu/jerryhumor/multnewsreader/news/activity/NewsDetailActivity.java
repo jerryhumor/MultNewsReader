@@ -17,7 +17,7 @@ import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
 import com.hdu.jerryhumor.multnewsreader.keep.database.DBHelper;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
-import com.hdu.jerryhumor.multnewsreader.net.callback.BaseCallback;
+import com.hdu.jerryhumor.multnewsreader.base.BaseCallback;
 import com.hdu.jerryhumor.multnewsreader.util.ToastUtil;
 
 public class NewsDetailActivity extends BaseActivity {
@@ -115,7 +115,7 @@ public class NewsDetailActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.showToast(NewsDetailActivity.this, "hahah");
+                finish();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

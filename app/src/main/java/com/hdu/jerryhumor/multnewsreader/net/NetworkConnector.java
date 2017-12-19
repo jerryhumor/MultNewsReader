@@ -8,8 +8,9 @@ import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
 import com.hdu.jerryhumor.multnewsreader.login.bean.LoginResponse;
 import com.hdu.jerryhumor.multnewsreader.net.bean.ArticleResponse;
 import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfoResponse;
-import com.hdu.jerryhumor.multnewsreader.net.callback.BaseCallback;
+import com.hdu.jerryhumor.multnewsreader.base.BaseCallback;
 import com.hdu.jerryhumor.multnewsreader.net.callback.NewsCallback;
+import com.hdu.jerryhumor.multnewsreader.register.bean.RegisterResponse;
 import com.hdu.jerryhumor.multnewsreader.util.JLog;
 
 import java.io.IOException;
@@ -138,7 +139,7 @@ public class NetworkConnector {
      * @param password                  加密后的密码
      * @param callback
      */
-    public void register(final String userName, final String password, final BaseCallback<String> callback){
+    public void register(final String userName, final String password, final BaseCallback<RegisterResponse> callback){
         String url = NewsApi.URL_REGISTER + userName + "-" + password;
         Log.i(TAG, "register, url: " + url);
         Request request = new Request.Builder().url(url).build();
@@ -152,11 +153,11 @@ public class NetworkConnector {
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
                 JLog.i(string);
-                LoginResponse loginResponse = mGson.fromJson(string, LoginResponse.class);
-                if (loginResponse.isSuccess()){
-                    callback.onSuccess(null);
+                RegisterResponse registerResponse = mGson.fromJson(string, RegisterResponse.class);
+                if (registerResponse.isSuccess()){
+                    callback.onSuccess(registerResponse);
                 }else{
-                    callback.onFailed(loginResponse.getError());
+                    callback.onFailed(registerResponse.getError());
                 }
             }
         });

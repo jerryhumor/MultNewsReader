@@ -1,13 +1,18 @@
 package com.hdu.jerryhumor.multnewsreader.news.activity;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +21,7 @@ import com.hdu.jerryhumor.multnewsreader.R;
 import com.hdu.jerryhumor.multnewsreader.base.BaseActivity;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsType;
+import com.hdu.jerryhumor.multnewsreader.keep.activity.KeepNewsListActivity;
 import com.hdu.jerryhumor.multnewsreader.login.LoginActivity;
 import com.hdu.jerryhumor.multnewsreader.login.UserInfo;
 import com.hdu.jerryhumor.multnewsreader.news.fragment.NewsFragment;
@@ -29,6 +35,8 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Toolbar toolbar;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
     private ImageView ivUserImage;
     private TextView tvUserName;
 
@@ -45,8 +53,11 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
         tabLayout = findViewById(R.id.tab_layout_type);
         viewPager = findViewById(R.id.view_pager_news);
         toolbar = findViewById(R.id.toolbar);
-        ivUserImage = findViewById(R.id.iv_user_image);
-        tvUserName = findViewById(R.id.tv_user_name);
+        navigationView = findViewById(R.id.nav_view);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        View headerView = navigationView.getHeaderView(0);
+        ivUserImage = headerView.findViewById(R.id.iv_user_image);
+        tvUserName = headerView.findViewById(R.id.tv_user_name);
     }
 
     @Override
@@ -72,10 +83,29 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
         viewPager.setAdapter(new MyFragmentAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.keep:
+                        drawerLayout.closeDrawer(Gravity.LEFT);
+                        startKeepListActivity();
+                        JLog.i("keep");
+                        break;
+                    case R.id.setting:
+                        JLog.i("setting");
+                        break;
+                    default:break;
+                }
+                return false;
+            }
+        });
         if (mUserInfo.isLogin()){
-            ivUserImage.setOnClickListener(this);
+            //todo 设置自定义头像
             tvUserName.setText(mUserInfo.getUserName());
         }else{
+            ivUserImage.setOnClickListener(this);
             tvUserName.setText("请登录");
         }
     }
@@ -90,12 +120,28 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(Gravity.LEFT);
+                break;
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * 启动登录界面
      */
     private void startLoginActivity(){
         Intent intent = new Intent(NewsListActivity.this, LoginActivity.class);
         startActivityForResult(intent, IntentExtra.LOGIN_ACTIVITY);
+    }
+
+    private void startKeepListActivity(){
+        Intent intent = new Intent(NewsListActivity.this, KeepNewsListActivity.class);
+        startActivity(intent);
     }
 
     @Override

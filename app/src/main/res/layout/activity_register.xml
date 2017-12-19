@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.hdu.jerryhumor.multnewsreader.login.LoginActivity">
+    tools:context="com.hdu.jerryhumor.multnewsreader.register.RegisterActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -36,12 +36,6 @@
                 android:layout_margin="@dimen/login_edit_text_margin"
                 android:inputType="textPassword"
                 android:hint="@string/hint_password"/>
-
-            <Button
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/login"/>
 
             <Button
                 android:id="@+id/btn_register"

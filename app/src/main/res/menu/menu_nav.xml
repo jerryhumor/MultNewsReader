@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+
+    <group
+        android:checkableBehavior="single">
         <item
-            android:id="@+id/setting"
-            android:icon="@mipmap/ic_setting"
-            android:title="@string/nav_title_setting" />
+            android:title="@string/nav_group_user">
+            <menu>
+                <item
+                    android:id="@+id/keep"
+                    android:icon="@drawable/ic_keep"
+                    android:title="@string/nav_title_keep" />
+            </menu>
+        </item>
+
+        <item
+            android:title="@string/nav_group_system">
+            <menu>
+                <item
+                    android:id="@+id/setting"
+                    android:icon="@mipmap/ic_setting"
+                    android:title="@string/nav_title_setting" />
+            </menu>
+        </item>
     </group>
 
 </menu>

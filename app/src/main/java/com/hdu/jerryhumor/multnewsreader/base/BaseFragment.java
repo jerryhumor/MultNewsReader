@@ -31,11 +31,11 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-    abstract int getResourceId();
+    abstract protected int getResourceId();
 
-    abstract void initView(View view);
+    abstract protected void initView(View view);
 
-    abstract void initData();
+    abstract protected void initData();
 
-    abstract void initEvent();
+    abstract protected void initEvent();
 }

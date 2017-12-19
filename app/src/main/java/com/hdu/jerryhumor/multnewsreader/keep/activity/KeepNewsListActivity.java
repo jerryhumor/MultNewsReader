@@ -1,7 +1,9 @@
 package com.hdu.jerryhumor.multnewsreader.keep.activity;
 
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -11,10 +13,13 @@ import com.hdu.jerryhumor.multnewsreader.adapter.KeepListAdapter;
 import com.hdu.jerryhumor.multnewsreader.base.BaseActivity;
 import com.hdu.jerryhumor.multnewsreader.keep.bean.KeepItem;
 import com.hdu.jerryhumor.multnewsreader.keep.database.DBHelper;
+import com.hdu.jerryhumor.multnewsreader.util.JLog;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
@@ -60,6 +65,7 @@ public class KeepNewsListActivity extends BaseActivity{
                 SwipeMenuItem deleteItem = new SwipeMenuItem(KeepNewsListActivity.this)
                         .setBackground(R.color.colorPrimary)
                         .setText(R.string.cancel_keep_news)
+                        .setTextColor(Color.parseColor("#ffffff"))
                         .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
                         .setWidth(getResources().getDimensionPixelSize(R.dimen.swipe_recycler_view_item_width));
                 swipeRightMenu.addMenuItem(deleteItem);
@@ -69,21 +75,43 @@ public class KeepNewsListActivity extends BaseActivity{
 
     @Override
     protected void initEvent() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initRecyclerView();
         List<KeepItem> items = mDBHelper.getKeepListBy(null, null, null);
         mKeepList.addAll(items);
         mAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initRecyclerView(){
         swipeMenuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         swipeMenuRecyclerView.setSwipeMenuCreator(mSwipeMenuCreator);
-        swipeMenuRecyclerView.setAdapter(mAdapter);
         swipeMenuRecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-
+                //todo 点击查看新闻
+                JLog.i("on click " + position);
             }
         });
+        swipeMenuRecyclerView.setSwipeMenuItemClickListener(new SwipeMenuItemClickListener() {
+            @Override
+            public void onItemClick(SwipeMenuBridge menuBridge) {
+                //todo 点击取消收藏
+                JLog.i("on click menu " + menuBridge.getPosition());
+            }
+        });
+        swipeMenuRecyclerView.setAdapter(mAdapter);
     }
+
 }

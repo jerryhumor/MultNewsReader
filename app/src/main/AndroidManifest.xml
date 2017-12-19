@@ -32,8 +32,11 @@
             android:name=".keep.activity.KeepNewsListActivity"
             android:label="@string/keep_news_list_activity_label" />
         <activity
-            android:name="login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:name=".login.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".register.RegisterActivity"
+            android:label="@string/register_activity_label"></activity>
     </application>
 
 </manifest>
