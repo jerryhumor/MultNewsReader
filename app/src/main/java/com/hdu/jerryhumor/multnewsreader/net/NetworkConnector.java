@@ -5,12 +5,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
-import com.hdu.jerryhumor.multnewsreader.login.bean.LoginResponse;
+import com.hdu.jerryhumor.multnewsreader.user.bean.LoginResponse;
 import com.hdu.jerryhumor.multnewsreader.net.bean.ArticleResponse;
 import com.hdu.jerryhumor.multnewsreader.net.bean.NewsInfoResponse;
 import com.hdu.jerryhumor.multnewsreader.base.BaseCallback;
 import com.hdu.jerryhumor.multnewsreader.net.callback.NewsCallback;
-import com.hdu.jerryhumor.multnewsreader.register.bean.RegisterResponse;
+import com.hdu.jerryhumor.multnewsreader.user.bean.RegisterResponse;
 import com.hdu.jerryhumor.multnewsreader.util.JLog;
 
 import java.io.IOException;

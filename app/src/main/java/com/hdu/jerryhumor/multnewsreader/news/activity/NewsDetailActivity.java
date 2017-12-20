@@ -18,6 +18,7 @@ import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
 import com.hdu.jerryhumor.multnewsreader.keep.database.DBHelper;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
 import com.hdu.jerryhumor.multnewsreader.base.BaseCallback;
+import com.hdu.jerryhumor.multnewsreader.util.JLog;
 import com.hdu.jerryhumor.multnewsreader.util.ToastUtil;
 
 public class NewsDetailActivity extends BaseActivity {
@@ -57,8 +58,6 @@ public class NewsDetailActivity extends BaseActivity {
         initToolbar();
 //        loadNews(mNewsId);
         loadFromLocal();
-
-
     }
 
     @Override
@@ -102,6 +101,8 @@ public class NewsDetailActivity extends BaseActivity {
         mNewsId = newsInfoIntent.getIntExtra(IntentExtra.NEWS_ID, 0);
         mTitle = newsInfoIntent.getStringExtra(IntentExtra.NEWS_TITLE);
         mSource = newsInfoIntent.getIntExtra(IntentExtra.NEWS_SOURCE, 0);
+
+        JLog.i("news detail, news id: " + mNewsId + ", title: " + mTitle + ", source: " + mSource);
     }
 
     //初始化 WebView

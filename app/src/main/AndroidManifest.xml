@@ -32,11 +32,19 @@
             android:name=".keep.activity.KeepNewsListActivity"
             android:label="@string/keep_news_list_activity_label" />
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".user.activity.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".register.RegisterActivity"
-            android:label="@string/register_activity_label"></activity>
+            android:name=".user.activity.RegisterActivity"
+            android:label="@string/register_activity_label"/>
+
+        <service
+            android:name="com.hdu.jerryhumor.multnewsreader.push.PushService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice"/>
+
+        <service android:name=".push.ReceiveService"/>
     </application>
 
 </manifest>

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.hdu.jerryhumor.multnewsreader.R;
-import com.hdu.jerryhumor.multnewsreader.adapter.KeepListAdapter;
+import com.hdu.jerryhumor.multnewsreader.news.adapter.KeepListAdapter;
 import com.hdu.jerryhumor.multnewsreader.base.BaseActivity;
 import com.hdu.jerryhumor.multnewsreader.keep.bean.KeepItem;
 import com.hdu.jerryhumor.multnewsreader.keep.database.DBHelper;

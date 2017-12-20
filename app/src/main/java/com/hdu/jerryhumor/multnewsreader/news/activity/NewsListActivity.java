@@ -22,10 +22,13 @@ import com.hdu.jerryhumor.multnewsreader.base.BaseActivity;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsType;
 import com.hdu.jerryhumor.multnewsreader.keep.activity.KeepNewsListActivity;
-import com.hdu.jerryhumor.multnewsreader.login.LoginActivity;
-import com.hdu.jerryhumor.multnewsreader.login.UserInfo;
+import com.hdu.jerryhumor.multnewsreader.user.activity.LoginActivity;
+import com.hdu.jerryhumor.multnewsreader.user.UserInfo;
 import com.hdu.jerryhumor.multnewsreader.news.fragment.NewsFragment;
+import com.hdu.jerryhumor.multnewsreader.push.PushService;
+import com.hdu.jerryhumor.multnewsreader.push.ReceiveService;
 import com.hdu.jerryhumor.multnewsreader.util.JLog;
+import com.igexin.sdk.PushManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +111,8 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
             ivUserImage.setOnClickListener(this);
             tvUserName.setText("请登录");
         }
+
+        initPushService();
     }
 
     @Override
@@ -142,6 +147,11 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
     private void startKeepListActivity(){
         Intent intent = new Intent(NewsListActivity.this, KeepNewsListActivity.class);
         startActivity(intent);
+    }
+
+    private void initPushService() {
+        PushManager.getInstance().initialize(this, PushService.class);
+        PushManager.getInstance().registerPushIntentService(this, ReceiveService.class);
     }
 
     @Override

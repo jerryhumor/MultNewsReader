@@ -1,4 +1,4 @@
-package com.hdu.jerryhumor.multnewsreader.register.bean;
+package com.hdu.jerryhumor.multnewsreader.user.bean;
 
 import com.google.gson.annotations.SerializedName;
 

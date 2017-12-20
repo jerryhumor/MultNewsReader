@@ -1,4 +1,4 @@
-package com.hdu.jerryhumor.multnewsreader.adapter;
+package com.hdu.jerryhumor.multnewsreader.news.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

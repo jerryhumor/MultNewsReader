@@ -11,7 +11,7 @@ import com.hdu.jerryhumor.multnewsreader.R;
 import com.hdu.jerryhumor.multnewsreader.base.BaseFragment;
 import com.hdu.jerryhumor.multnewsreader.news.activity.NewsDetailActivity;
 import com.hdu.jerryhumor.multnewsreader.news.activity.NewsListActivity;
-import com.hdu.jerryhumor.multnewsreader.adapter.NewsListAdapter;
+import com.hdu.jerryhumor.multnewsreader.news.adapter.NewsListAdapter;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
 import com.hdu.jerryhumor.multnewsreader.constant.NewsType;

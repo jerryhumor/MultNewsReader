@@ -2,7 +2,7 @@ package com.hdu.jerryhumor.multnewsreader;
 
 import android.app.Application;
 
-import com.hdu.jerryhumor.multnewsreader.login.UserInfo;
+import com.hdu.jerryhumor.multnewsreader.user.UserInfo;
 import com.hdu.jerryhumor.multnewsreader.util.SharedPreferencesUtil;
 
 /**

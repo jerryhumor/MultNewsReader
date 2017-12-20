@@ -1,4 +1,4 @@
-package com.hdu.jerryhumor.multnewsreader.login;
+package com.hdu.jerryhumor.multnewsreader.user;
 
 /**
  * Created by hanjianhao on 2017/12/18.
