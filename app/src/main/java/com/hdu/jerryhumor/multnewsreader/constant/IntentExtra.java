@@ -12,7 +12,9 @@ public class IntentExtra {
     public static final String NEWS_SOURCE = "news_source";
 
     public static final String USER_NAME = "user_name";
+    public static final String USER_ACCOUNT = "user_account";
 
     public static final int LOGIN_ACTIVITY = 7;
     public static final int REGISTER_ACTIVITY = 8;
+
 }

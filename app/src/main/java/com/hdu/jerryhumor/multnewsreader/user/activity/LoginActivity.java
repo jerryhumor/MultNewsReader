@@ -14,6 +14,7 @@ import com.hdu.jerryhumor.multnewsreader.user.UserInfo;
 import com.hdu.jerryhumor.multnewsreader.user.bean.LoginResponse;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
 import com.hdu.jerryhumor.multnewsreader.base.BaseCallback;
+import com.igexin.sdk.PushManager;
 
 /**
  * A login screen that offers login via email/password.
@@ -78,6 +79,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IntentExtra.REGISTER_ACTIVITY && resultCode == RESULT_OK){
             String userName = data.getStringExtra(IntentExtra.USER_NAME);
+            String userAccount = data.getStringExtra(IntentExtra.USER_ACCOUNT);
+            PushManager.getInstance().bindAlias(LoginActivity.this, userAccount);
             setLoginInfo(userName);
             setLoginSuccessResult(userName);
             finish();
@@ -128,6 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                         public void run() {
                             setLoginInfo(data.getUserName());
                             setLoginSuccessResult(data.getUserName());
+                            PushManager.getInstance().bindAlias(LoginActivity.this, data.getAccount());
                             finish();
                         }
                     });
@@ -157,11 +161,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
      * 设置登录结果
      * @param userName
      */
-    private void setLoginSuccessResult(String userName){
+    private void setLoginSuccessResult(final String userName){
         Intent intent = new Intent();
         intent.putExtra(IntentExtra.USER_NAME, userName);
         setResult(RESULT_OK, intent);
     }
+
+
 
 
 

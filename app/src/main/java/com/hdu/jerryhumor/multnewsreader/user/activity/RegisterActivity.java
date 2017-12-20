@@ -108,7 +108,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         @Override
                         public void run() {
                             showToast("注册成功");
-                            setActivityResult(data.getUserName());
+                            setActivityResult(data.getUserName(), data.getAccount());
                             finish();
                         }
                     });
@@ -120,9 +120,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     /**
      * 返回结果
      */
-    private void setActivityResult(String userName){
+    private void setActivityResult(final String userName, final String account){
         Intent intent = new Intent();
         intent.putExtra(IntentExtra.USER_NAME, userName);
+        intent.putExtra(IntentExtra.USER_ACCOUNT, account);
         setResult(RESULT_OK, intent);
     }
 }

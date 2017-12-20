@@ -12,8 +12,11 @@ public class RegisterResponse {
     private String status;
     @SerializedName("error")
     private String error;
+    @SerializedName("account")
+    private String account;
     @SerializedName("user_name")
     private String userName;
+
 
     public boolean isSuccess(){
         return "ok".equals(status);
@@ -21,6 +24,10 @@ public class RegisterResponse {
 
     public String getError(){
         return error;
+    }
+
+    public String getAccount() {
+        return account;
     }
 
     public String getUserName() {

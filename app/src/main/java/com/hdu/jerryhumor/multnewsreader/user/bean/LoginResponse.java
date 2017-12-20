@@ -12,6 +12,8 @@ public class LoginResponse {
     private String status;
     @SerializedName("error")
     private String error;
+    @SerializedName("account")
+    private String account;
     @SerializedName("user_name")
     private String userName;
 
@@ -21,6 +23,10 @@ public class LoginResponse {
 
     public String getError() {
         return error;
+    }
+
+    public String getAccount() {
+        return account;
     }
 
     public String getUserName() {
