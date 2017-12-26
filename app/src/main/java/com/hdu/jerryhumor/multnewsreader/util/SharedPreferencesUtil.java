@@ -13,11 +13,12 @@ public class SharedPreferencesUtil {
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
 
-    private static String TAG_PRE_NAME = "user_data";
-    private static String TAG_REMEMBER = "remember_password";
-    private static String TAG_USER_NAME = "user_name";
-    private static String TAG_PASSWORD = "password";
-    private static String TAG_IS_LOGIN = "is_login";
+    private static final String TAG_PRE_NAME = "user_data";
+    private static final String TAG_REMEMBER = "remember_password";
+    private static final String TAG_USER_NAME = "user_name";
+    private static final String TAG_PASSWORD = "password";
+    private static final String TAG_IS_LOGIN = "is_login";
+    private static final String TAG_USER_ACCOUNT = "user_account";
 
 
     private SharedPreferencesUtil(Context context) {
@@ -52,9 +53,18 @@ public class SharedPreferencesUtil {
         mEditor.apply();
     }
 
+    public void writeUserAccount(String userAccount){
+        mEditor.putString(TAG_USER_ACCOUNT, userAccount);
+        mEditor.apply();
+    }
+
 
     public String getUserName() {
         return mSharedPreferences.getString(TAG_USER_NAME, "");
+    }
+
+    public String getUserAccount(){
+        return mSharedPreferences.getString(TAG_USER_ACCOUNT, "");
     }
 
     public String getPassword() {

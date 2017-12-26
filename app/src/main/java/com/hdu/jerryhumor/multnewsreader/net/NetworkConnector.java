@@ -64,7 +64,9 @@ public class NetworkConnector {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                NewsInfoResponse newsInfoResponse = mGson.fromJson(response.body().string(), NewsInfoResponse.class);
+                String json = response.body().string();
+                Log.i(TAG, "onResponse: json string is: " + json);
+                NewsInfoResponse newsInfoResponse = mGson.fromJson(json, NewsInfoResponse.class);
                 if (newsInfoResponse.isSuccess()){
                     callback.onSuccess(newsInfoResponse.getNewsInfoList(),
                             newsInfoResponse.isFirstPage(),
@@ -77,8 +79,8 @@ public class NetworkConnector {
         
     }
 
-    public void getNewsDetail(int newsId, final BaseCallback<String> callback){
-        String url = NewsApi.URL_GET_NEWS_DETAIL + newsId;
+    public void getNewsDetail(final int newsId, final int newsType, final String userAccount, final BaseCallback<String> callback){
+        String url = NewsApi.URL_GET_NEWS_DETAIL + newsId + "-" + newsType + "-" + userAccount;
         Log.i(TAG, "get news detail, url: " + url);
         Request request = new Request.Builder().url(url).build();
         Call call = mOkHttpClient.newCall(request);

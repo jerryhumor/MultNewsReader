@@ -14,6 +14,7 @@ import com.hdu.jerryhumor.multnewsreader.user.UserInfo;
 import com.hdu.jerryhumor.multnewsreader.user.bean.LoginResponse;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
 import com.hdu.jerryhumor.multnewsreader.base.BaseCallback;
+import com.hdu.jerryhumor.multnewsreader.util.SharedPreferencesUtil;
 import com.igexin.sdk.PushManager;
 
 /**
@@ -81,7 +82,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             String userName = data.getStringExtra(IntentExtra.USER_NAME);
             String userAccount = data.getStringExtra(IntentExtra.USER_ACCOUNT);
             PushManager.getInstance().bindAlias(LoginActivity.this, userAccount);
-            setLoginInfo(userName);
+            setLoginInfo(userName, userAccount);
             setLoginSuccessResult(userName);
             finish();
         }
@@ -129,7 +130,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            setLoginInfo(data.getUserName());
+                            setLoginInfo(data.getUserName(), data.getAccount());
                             setLoginSuccessResult(data.getUserName());
                             PushManager.getInstance().bindAlias(LoginActivity.this, data.getAccount());
                             finish();
@@ -152,9 +153,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
      * 登录信息写入内存
      * @param userName
      */
-    private void setLoginInfo(String userName){
+    private void setLoginInfo(String userName, String userAccount){
         UserInfo userInfo = UserInfo.getInstance();
-        userInfo.setUserName(userName);
+        userInfo.setLogin(true)
+                .setUserName(userName)
+                .setUserAccount(userAccount);
+        SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(LoginActivity.this);
+        util.writeLogin(true);
+        util.writeUserName(userName);
+        util.writeUserAccount(userAccount);
     }
 
     /**
@@ -166,11 +173,5 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         intent.putExtra(IntentExtra.USER_NAME, userName);
         setResult(RESULT_OK, intent);
     }
-
-
-
-
-
-
 }
 

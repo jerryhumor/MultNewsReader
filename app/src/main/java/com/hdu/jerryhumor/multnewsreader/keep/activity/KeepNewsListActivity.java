@@ -108,6 +108,8 @@ public class KeepNewsListActivity extends BaseActivity{
             @Override
             public void onItemClick(SwipeMenuBridge menuBridge) {
                 //todo 点击取消收藏
+                //menuBridge.getPosition() 获取菜单位置
+                //menuBridge.getAdapterPosition() 获取点击条目位置
                 JLog.i("on click menu " + menuBridge.getPosition());
             }
         });

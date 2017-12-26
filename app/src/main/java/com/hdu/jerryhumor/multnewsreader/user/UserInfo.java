@@ -9,6 +9,7 @@ public class UserInfo {
     private static UserInfo mInstance;
 
     private String userName;
+    private String userAccount;
     private boolean isLogin;
 
     private UserInfo(){}
@@ -28,8 +29,22 @@ public class UserInfo {
         return isLogin;
     }
 
-    public void setUserName(String userName){
+    public UserInfo setLogin(boolean isLogin){
+        this.isLogin = isLogin;
+        return this;
+    }
+
+    public UserInfo setUserName(String userName){
         this.userName = userName;
-        isLogin = true;
+        return this;
+    }
+
+    public String getUserAccount() {
+        return userAccount;
+    }
+
+    public UserInfo setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
+        return this;
     }
 }

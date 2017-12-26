@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/login_edit_text_margin"
+                android:text="@string/test_account"
                 android:hint="@string/hint_user_name"/>
 
             <EditText
@@ -35,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/login_edit_text_margin"
                 android:inputType="textPassword"
+                android:text="@string/test_password"
                 android:hint="@string/hint_password"/>
 
             <Button

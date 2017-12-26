@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">默阅</string>
+    <string name="app_name">多阅</string>
 
     <string name="nav_title_setting">设置</string>
-    <string name="news_list_activity_label">默阅</string>
+    <string name="news_list_activity_label">多阅</string>
     <string name="news_detail_activity_label">新闻</string>
     <string name="keep">收藏</string>
     <string name="keep_news_list_activity_label">收藏新闻</string>
@@ -31,4 +31,9 @@
     <string name="nav_group_system">系统</string>
     <string name="nav_group_user">用户</string>
     <string name="hint_account">账号</string>
+
+
+    <string name="test_account">admin</string>
+    <string name="test_password">password</string>
+    <string name="nav_title_logout">退出</string>
 </resources>

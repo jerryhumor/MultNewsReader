@@ -1,6 +1,8 @@
 package com.hdu.jerryhumor.multnewsreader.news.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,7 +46,7 @@ public class NewsFragment extends BaseFragment {
     private int mType;
     private String mUrl;
     private String mFragmentTitle;
-    private long mLastUpdateTime = 0;                                               //上一次刷新新闻列表时间戳（不是上拉加载 单位秒）
+    private long mLastUpdateTime = new Date().getTime() / 1000;                                   //上一次刷新新闻列表时间戳（不是上拉加载 单位秒）
 
     private NewsListAdapter mAdapter;
     private List<NewsInfo> mNewsInfoList;
@@ -54,6 +56,13 @@ public class NewsFragment extends BaseFragment {
     private UserProperties mUserProperties;
     private int mCurrentPage = 1;
     private boolean mIsLastPage = false;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mNewsInfoList = new ArrayList<>();
+        mNetworkConnector = NetworkConnector.getInstance();
+    }
 
     @Override
     protected int getResourceId() {
@@ -68,12 +77,10 @@ public class NewsFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        mNewsInfoList = new ArrayList<>();
         mAdapter = new NewsListAdapter(mNewsInfoList);
         mActivity = (NewsListActivity) getActivity();
-        mNetworkConnector = NetworkConnector.getInstance();
         mUserProperties = new UserProperties(mActivity);
-        generateTestData();
+//        generateTestData();
     }
 
     @Override
@@ -81,7 +88,33 @@ public class NewsFragment extends BaseFragment {
         initRecyclerView();
         initSwipeRefreshLayout();
         solveRvSrlConflict();
-//        loadDataFromNet(mCurrentPage, DEFAULT_PAGE_SIZE, mLastUpdateTime);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        JLog.i("视图可见");
+        if (!hasData()){
+            JLog.i("没有数据，自动加载");
+            swipeRefreshLayout.setRefreshing(true);
+            loadDataFromNet(mCurrentPage, DEFAULT_PAGE_SIZE, mLastUpdateTime);
+        }else{
+            JLog.i("有缓存数据，不加载新闻");
+        }
+    }
+
+    private boolean hasData() {
+        boolean hasData = true;
+        if (mNewsInfoList == null){
+            JLog.i("新闻列表为空指针");
+            hasData = false;
+        }else{
+            if (mNewsInfoList.size() == 0){
+                hasData = false;
+                JLog.i("新闻列表数量为0");
+            }
+        }
+        return hasData;
     }
 
     /**
@@ -157,8 +190,10 @@ public class NewsFragment extends BaseFragment {
      * @param pageSize      一次加载的新闻数量
      */
     private void loadDataFromNet(int pageNum, int pageSize, long lastUpdateTime){
+        JLog.i("联网获取数据");
         if (mIsLastPage){
             ToastUtil.showToast(mActivity, "没有更多信息");
+            swipeRefreshLayout.setRefreshing(false);
         }else{
             mNetworkConnector.getNews(pageNum, pageSize, lastUpdateTime, mType, new NewsCallback() {
                 @Override
@@ -194,17 +229,18 @@ public class NewsFragment extends BaseFragment {
                         mNewsInfoList.clear();
 
                     //按照用户喜好排序
-                    List<NewsInfo> sortedNewsInfo = null;
-                    if (isRecommendFragment()){
-                        sortedNewsInfo = sortByUserProperties(newsInfoList);
-                    }else{
-                        sortedNewsInfo = newsInfoList;
-                    }
+//                    List<NewsInfo> sortedNewsInfo = null;
+//                    if (isRecommendFragment()){
+//                        sortedNewsInfo = sortByUserProperties(newsInfoList);
+//                    }else{
+//                        sortedNewsInfo = newsInfoList;
+//                    }
 
                     //添加数据
-                    for (NewsInfo info : sortedNewsInfo){
-                        mNewsInfoList.add(info);
-                    }
+//                    for (NewsInfo info : sortedNewsInfo){
+//                        mNewsInfoList.add(info);
+//                    }
+                    mNewsInfoList.addAll(newsInfoList);
 
                     //主线程更新数据
                     mActivity.runOnUiThread(new Runnable() {
@@ -254,7 +290,7 @@ public class NewsFragment extends BaseFragment {
         Intent intent = new Intent(mActivity, NewsDetailActivity.class);
         intent.putExtra(IntentExtra.NEWS_ID, newsId);
         intent.putExtra(IntentExtra.NEWS_TITLE, title);
-        intent.putExtra(IntentExtra.NEWS_SOURCE, type);
+        intent.putExtra(IntentExtra.NEWS_TYPE, type);
         startActivity(intent);
     }
 

@@ -28,6 +28,7 @@ import com.hdu.jerryhumor.multnewsreader.news.fragment.NewsFragment;
 import com.hdu.jerryhumor.multnewsreader.push.PushService;
 import com.hdu.jerryhumor.multnewsreader.push.ReceiveService;
 import com.hdu.jerryhumor.multnewsreader.util.JLog;
+import com.hdu.jerryhumor.multnewsreader.util.SharedPreferencesUtil;
 import com.igexin.sdk.PushManager;
 
 import java.util.ArrayList;
@@ -77,7 +78,6 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
         mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_EDUCATE));
         mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_WAR));
         mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_POLITICS));
-        mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_UNKNOWN));
         mUserInfo = UserInfo.getInstance();
     }
 
@@ -99,6 +99,8 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
                     case R.id.setting:
                         JLog.i("setting");
                         break;
+                    case R.id.logout:
+                        logout();
                     default:break;
                 }
                 return false;
@@ -115,11 +117,19 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
         initPushService();
     }
 
+    private void logout() {
+        SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(NewsListActivity.this);
+        util.writeLogin(false);
+        mUserInfo.setLogin(false);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.iv_user_image:
-                startLoginActivity();
+                if (!mUserInfo.isLogin()){
+                    startLoginActivity();
+                }
                 break;
             default:break;
         }

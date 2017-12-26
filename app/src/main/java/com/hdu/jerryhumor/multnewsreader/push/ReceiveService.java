@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.hdu.jerryhumor.multnewsreader.R;
 import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
 import com.hdu.jerryhumor.multnewsreader.news.activity.NewsDetailActivity;
+import com.hdu.jerryhumor.multnewsreader.util.JLog;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.message.GTCmdMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
@@ -43,12 +44,22 @@ public class ReceiveService extends GTIntentService {
 
     @Override
     public void onReceiveMessageData(Context context, GTTransmitMessage msg) {
-        Log.i(TAG, "on receive message data");
+        Log.i(TAG, "获取到透传信息");
         String str = new String(msg.getPayload());
-        Log.i(TAG, str);
+        Log.i(TAG, "透传信息为:" + str);
         Gson gson = new Gson();
-        PushNewsBean bean = gson.fromJson(str, PushNewsBean.class);
-        sendNotification(context, "推荐新闻", bean.getNewsTitle(), bean.getNewsId(), bean.getNewsTitle(), bean.getNewsSource());
+        JLog.i("创建GSon");
+        try{
+            PushNewsBean bean = gson.fromJson(str, PushNewsBean.class);
+            if (bean == null){
+                JLog.e("透传信息格式不符");
+            }else{
+                sendNotification(context, "推荐新闻", bean.getNewsTitle(), bean.getNewsId(), bean.getNewsTitle(), bean.getNewsSource());
+            }
+        }catch (Exception e){
+            JLog.e("解析json数据出错");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -78,6 +89,7 @@ public class ReceiveService extends GTIntentService {
     private void sendNotification(Context context, final String title, final String content,
                                   final int newsId, final String newsTitle, final int newsSource) {
 
+        JLog.i("发送通知，新闻标题：" + newsTitle);
         //获取系统的通知服务
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 

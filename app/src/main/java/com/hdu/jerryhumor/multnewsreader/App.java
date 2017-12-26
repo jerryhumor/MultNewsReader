@@ -16,7 +16,10 @@ public class App extends Application {
         super.onCreate();
         SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(this);
         if (util.isLogin()){
-            UserInfo.getInstance().setUserName(util.getUserName());
+            UserInfo.getInstance()
+                    .setLogin(true)
+                    .setUserName(util.getUserName())
+                    .setUserAccount(util.getUserAccount());
         }
     }
 }

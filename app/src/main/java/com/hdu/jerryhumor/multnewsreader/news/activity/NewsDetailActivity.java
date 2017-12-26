@@ -18,8 +18,15 @@ import com.hdu.jerryhumor.multnewsreader.constant.NewsApi;
 import com.hdu.jerryhumor.multnewsreader.keep.database.DBHelper;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
 import com.hdu.jerryhumor.multnewsreader.base.BaseCallback;
+import com.hdu.jerryhumor.multnewsreader.user.UserInfo;
 import com.hdu.jerryhumor.multnewsreader.util.JLog;
 import com.hdu.jerryhumor.multnewsreader.util.ToastUtil;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+import java.util.List;
 
 public class NewsDetailActivity extends BaseActivity {
 
@@ -29,7 +36,7 @@ public class NewsDetailActivity extends BaseActivity {
 
     private NetworkConnector mNetworkConnector;
     private DBHelper mDBHelper;
-    private int mNewsId;
+    private int mNewsId, mNewsType;
     private String mTitle;
     private int mSource;
 
@@ -56,8 +63,8 @@ public class NewsDetailActivity extends BaseActivity {
     protected void initEvent() {
         initWebView();
         initToolbar();
-//        loadNews(mNewsId);
-        loadFromLocal();
+        loadNews(mNewsId, mNewsType, UserInfo.getInstance().getUserAccount());
+//        loadFromLocal();
     }
 
     @Override
@@ -101,6 +108,7 @@ public class NewsDetailActivity extends BaseActivity {
         mNewsId = newsInfoIntent.getIntExtra(IntentExtra.NEWS_ID, 0);
         mTitle = newsInfoIntent.getStringExtra(IntentExtra.NEWS_TITLE);
         mSource = newsInfoIntent.getIntExtra(IntentExtra.NEWS_SOURCE, 0);
+        mNewsType = newsInfoIntent.getIntExtra(IntentExtra.NEWS_TYPE, 1);
 
         JLog.i("news detail, news id: " + mNewsId + ", title: " + mTitle + ", source: " + mSource);
     }
@@ -123,9 +131,9 @@ public class NewsDetailActivity extends BaseActivity {
     }
 
     //载入数据
-    private void loadNews(int newsId){
+    private void loadNews(int newsId, int newsType, String userAccount){
         showProgressBar();
-        mNetworkConnector.getNewsDetail(newsId, new BaseCallback<String>() {
+        mNetworkConnector.getNewsDetail(newsId, newsType, userAccount, new BaseCallback<String>() {
             @Override
             public void onNetworkError(Exception e) {
                 runOnUiThread(new Runnable() {
@@ -154,11 +162,29 @@ public class NewsDetailActivity extends BaseActivity {
                     @Override
                     public void run() {
                         hideProgressBar();
-                        webView.loadData(data, "text/html; charset=utf-8", "utf-8");
+                        loadHtml(data);
                     }
                 });
             }
         });
+    }
+
+    //导入服务器获取的html文档
+    private void loadHtml(final String data) {
+        String html = processData(data);
+        webView.loadData(html, "text/html; charset=utf-8", "utf-8");
+    }
+
+    private String processData(final String data) {
+        String processedData = data.replace("\\\"", "\"").replace("//", "http:\\\\").replace("data-src", "src");
+//        Document document = Jsoup.parse(processedData);
+//        List<Element> imgElements = document.getElementsByTag("img");
+//        if (imgElements != null && imgElements.size() > 0){
+//            for (Element imgElement : imgElements){
+//            }
+//        }
+//        JLog.i(document.body().toString());
+        return processedData;
     }
 
     private void keepArticle(){

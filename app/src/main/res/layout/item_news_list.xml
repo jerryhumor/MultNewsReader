@@ -24,7 +24,7 @@
             android:layout_height="0dp"
             android:layout_weight="3"
             android:layout_margin="@dimen/news_list_item_title_margin"
-            android:maxLines="2"
+            android:maxLines="1"
             tools:text="今天袜子大减价"/>
 
         <TextView
