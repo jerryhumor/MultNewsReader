@@ -189,7 +189,7 @@ public class NewsDetailActivity extends BaseActivity {
 
     private void keepArticle(){
         if (mDBHelper.insertKeepItem(mTitle, mSource, mNewsId) < 1){
-            showToast("收藏失败");
+            showToast("已收藏");
         }else{
             showToast("收藏成功");
         }

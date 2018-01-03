@@ -13,11 +13,12 @@ import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
 import com.hdu.jerryhumor.multnewsreader.base.BaseCallback;
 import com.hdu.jerryhumor.multnewsreader.user.bean.RegisterResponse;
+import com.hdu.jerryhumor.multnewsreader.util.JLog;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener{
 
     private Toolbar toolbar;
-    private EditText etUserName, etPassword, etAccount;
+    private EditText etUserName, etPassword, etAccount, etPasswordRepeat;
     private Button btnRegister;
 
     private NetworkConnector mNetworkConnector;
@@ -33,6 +34,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         etAccount = findViewById(R.id.et_account);
         etUserName = findViewById(R.id.et_user_name);
         etPassword = findViewById(R.id.et_password);
+        etPasswordRepeat = findViewById(R.id.et_password_repeat);
         btnRegister = findViewById(R.id.btn_register);
     }
 
@@ -71,15 +73,25 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String account = etAccount.getText().toString();
         String userName = etUserName.getText().toString();
         String password = etPassword.getText().toString();
+        String passwordRepeat = etPasswordRepeat.getText().toString();
         boolean userInfoValid = true;
         if (TextUtils.isEmpty(userName)){
             showToast("用户名不能为空");
             userInfoValid = false;
         }
-        if (TextUtils.isEmpty(password)){
+        if (userInfoValid && TextUtils.isEmpty(password)){
             showToast("密码不能为空");
             userInfoValid = false;
         }
+        if (userInfoValid && TextUtils.isEmpty(passwordRepeat)){
+            showToast("请填写重复密码");
+            userInfoValid = false;
+        }
+        if (userInfoValid && !password.equals(passwordRepeat)){
+            showToast("两次密码不相同");
+            userInfoValid = false;
+        }
+
         if (userInfoValid){
             mNetworkConnector.register(account, userName, password, new BaseCallback<RegisterResponse>() {
                 @Override
@@ -97,7 +109,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            showToast("登录失败，" + error);
+                            showToast("注册失败，" + error);
                         }
                     });
                 }

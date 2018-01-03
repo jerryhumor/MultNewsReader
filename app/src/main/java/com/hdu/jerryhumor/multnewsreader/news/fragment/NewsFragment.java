@@ -136,7 +136,7 @@ public class NewsFragment extends BaseFragment {
             public void onClickItem(int position) {
                 NewsInfo newsInfo = mNewsInfoList.get(position);
                 mUserProperties.addProperties(newsInfo.getType());
-                startNewsDetailActivity(newsInfo.getNewsId(), newsInfo.getTitle(), newsInfo.getType());
+                startNewsDetailActivity(newsInfo.getNewsId(), newsInfo.getTitle(), newsInfo.getType(), newsInfo.getSource());
             }
         });
         rvNewsList.setLayoutManager(mLinearLayoutManager);
@@ -286,11 +286,12 @@ public class NewsFragment extends BaseFragment {
      * 跳转到详细新闻页
      * @param newsId
      */
-    private void startNewsDetailActivity(final int newsId, final String title, final int type){
+    private void startNewsDetailActivity(final int newsId, final String title, final int type, final int source){
         Intent intent = new Intent(mActivity, NewsDetailActivity.class);
         intent.putExtra(IntentExtra.NEWS_ID, newsId);
         intent.putExtra(IntentExtra.NEWS_TITLE, title);
         intent.putExtra(IntentExtra.NEWS_TYPE, type);
+        intent.putExtra(IntentExtra.NEWS_SOURCE, source);
         startActivity(intent);
     }
 

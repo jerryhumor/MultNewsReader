@@ -35,5 +35,9 @@
 
     <string name="test_account">admin</string>
     <string name="test_password">password</string>
-    <string name="nav_title_logout">退出</string>
+    <string name="nav_title_logout">退出登录</string>
+    <string name="nav_title_feedback">用户反馈</string>
+    <string name="nav_title_update">升级</string>
+    <string name="nav_title_about">关于</string>
+    <string name="hint_password_repeat">重复密码</string>
 </resources>

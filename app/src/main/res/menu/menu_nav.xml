@@ -15,6 +15,11 @@
                     android:id="@+id/logout"
                     android:icon="@mipmap/ic_logout"
                     android:title="@string/nav_title_logout"/>
+
+                <item
+                    android:id="@+id/id_feedback"
+                    android:icon="@mipmap/ic_feedback"
+                    android:title="@string/nav_title_feedback"/>
             </menu>
         </item>
 
@@ -25,6 +30,15 @@
                     android:id="@+id/setting"
                     android:icon="@mipmap/ic_setting"
                     android:title="@string/nav_title_setting" />
+
+                <item android:id="@+id/update"
+                    android:icon="@mipmap/ic_update"
+                    android:title="@string/nav_title_update"/>
+
+                <item
+                    android:id="@+id/about"
+                    android:icon="@mipmap/ic_about"
+                    android:title="@string/nav_title_about"/>
             </menu>
         </item>
     </group>
