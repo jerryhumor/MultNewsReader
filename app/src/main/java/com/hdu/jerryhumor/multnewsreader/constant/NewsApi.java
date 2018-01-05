@@ -8,7 +8,7 @@ package com.hdu.jerryhumor.multnewsreader.constant;
 
 public class NewsApi {
 
-    public static final String SERVER_URL = "http://192.168.0.12:8080/";
+    public static final String SERVER_URL = "http://192.168.2.71:8080/";
 
     public static final String URL_GET_NEWS_LIST = SERVER_URL + "news/";
     public static final String URL_GET_NEWS_DETAIL = SERVER_URL + "article/";

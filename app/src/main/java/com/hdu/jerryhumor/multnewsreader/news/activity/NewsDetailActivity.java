@@ -19,6 +19,7 @@ import com.hdu.jerryhumor.multnewsreader.keep.database.DBHelper;
 import com.hdu.jerryhumor.multnewsreader.net.NetworkConnector;
 import com.hdu.jerryhumor.multnewsreader.base.BaseCallback;
 import com.hdu.jerryhumor.multnewsreader.user.UserInfo;
+import com.hdu.jerryhumor.multnewsreader.util.HtmlUtil;
 import com.hdu.jerryhumor.multnewsreader.util.JLog;
 import com.hdu.jerryhumor.multnewsreader.util.ToastUtil;
 
@@ -115,7 +116,7 @@ public class NewsDetailActivity extends BaseActivity {
 
     //初始化 WebView
     private void initWebView(){
-
+        webView.setDrawingCacheEnabled(true);
     }
 
     //初始化Toolbar
@@ -171,20 +172,9 @@ public class NewsDetailActivity extends BaseActivity {
 
     //导入服务器获取的html文档
     private void loadHtml(final String data) {
-        String html = processData(data);
+        String html = HtmlUtil.handleHtml(data, mSource);
+        JLog.i(html);
         webView.loadData(html, "text/html; charset=utf-8", "utf-8");
-    }
-
-    private String processData(final String data) {
-        String processedData = data.replace("\\\"", "\"").replace("//", "http:\\\\").replace("data-src", "src");
-//        Document document = Jsoup.parse(processedData);
-//        List<Element> imgElements = document.getElementsByTag("img");
-//        if (imgElements != null && imgElements.size() > 0){
-//            for (Element imgElement : imgElements){
-//            }
-//        }
-//        JLog.i(document.body().toString());
-        return processedData;
     }
 
     private void keepArticle(){

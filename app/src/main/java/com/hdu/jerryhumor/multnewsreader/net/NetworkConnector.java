@@ -93,7 +93,6 @@ public class NetworkConnector {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                JLog.i(string);
                 ArticleResponse articleResponse = mGson.fromJson(string, ArticleResponse.class);
                 if (articleResponse.isSuccess()){
                     callback.onSuccess(articleResponse.getContent());
@@ -114,6 +113,7 @@ public class NetworkConnector {
         String url = NewsApi.URL_LOGIN + userName + "-" + password;
         Log.i(TAG, "login, url: " + url);
         Request request = new Request.Builder().url(url).build();
+
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override

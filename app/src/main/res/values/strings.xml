@@ -40,4 +40,5 @@
     <string name="nav_title_update">升级</string>
     <string name="nav_title_about">关于</string>
     <string name="hint_password_repeat">重复密码</string>
+    <string name="forget_password">忘记密码？</string>
 </resources>
