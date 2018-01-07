@@ -95,6 +95,11 @@ img {
   color: transparent;
   font-size: 0;
 }
+video {
+  max-width: 100%;
+  display: block;
+  margin: 10px 0;
+}
 svg:not(:root) {
   overflow: hidden;
 }
@@ -800,4 +805,43 @@ a.origin-source:link .text {
 }
 .night .origin-source.with-link:before {
   border-color: transparent transparent transparent #666;
+}
+
+/* 网易新闻css样式 */
+.time{
+  color: gray;
+  text-align: left;
+}
+.source{
+  color: gray;
+  text-align: left;
+}
+.editor{
+  color: gray;
+  text-align: right;
+}
+.otitle{
+  color: gray;
+}
+
+/* 搜狐css样式 */
+.statement{
+  color: gray;
+  text-align: right;
+}
+.info .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  margin-right: 5px;
+}
+.infos-wrapper .name {
+  color: #444;
+  font-weight: 700;
+}
+.display-content {
+  color: #444;
+  line-height: 1.6em;
+  font-size: 17px;
+  margin: 10px 0 20px;
 }

@@ -174,7 +174,8 @@ public class NewsDetailActivity extends BaseActivity {
     private void loadHtml(final String data) {
         String html = HtmlUtil.handleHtml(data, mSource);
         JLog.i(html);
-        webView.loadData(html, "text/html; charset=utf-8", "utf-8");
+        webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html; charset=utf-8", "utf-8", null);
+//        webView.loadData(html, "text/html; charset=utf-8", "utf-8");
     }
 
     private void keepArticle(){

@@ -23,7 +23,7 @@ public class NewsType {
 
     public static final String NAME_LATEST = "最新";                      // 名称类型最新
     public static final String NAME_TECH = "科技";                        // 名称类型科技
-    public static final String NAME_SPORT = "运动";                       // 名称类型体育
+    public static final String NAME_SPORT = "体育";                       // 名称类型体育
     public static final String NAME_SOCIAL = "社会";                      // 名称类型社会
     public static final String NAME_FUN = "娱乐";                         // 名称类型娱乐
     public static final String NAME_CAR = "汽车";                         // 名称类型汽车
