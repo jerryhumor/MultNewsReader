@@ -3,6 +3,7 @@ package com.hdu.jerryhumor.multnewsreader;
 import android.app.Application;
 
 import com.hdu.jerryhumor.multnewsreader.user.UserInfo;
+import com.hdu.jerryhumor.multnewsreader.util.JLog;
 import com.hdu.jerryhumor.multnewsreader.util.SharedPreferencesUtil;
 
 /**
@@ -16,10 +17,13 @@ public class App extends Application {
         super.onCreate();
         SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(this);
         if (util.isLogin()){
+            JLog.i("is login");
             UserInfo.getInstance()
                     .setLogin(true)
                     .setUserName(util.getUserName())
                     .setUserAccount(util.getUserAccount());
+        }else{
+            JLog.i("haven't login");
         }
     }
 }

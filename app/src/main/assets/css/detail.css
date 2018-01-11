@@ -845,3 +845,14 @@ a.origin-source:link .text {
   font-size: 17px;
   margin: 10px 0 20px;
 }
+p img{
+  max-width: 100%;
+  display: block;
+  margin: 10px 0;
+}
+
+.content-image{
+  max-width: 100%;
+  display: block;
+  margin: 10px 0;
+}

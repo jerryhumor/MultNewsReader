@@ -46,6 +46,7 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
 
     private List<NewsFragment> mNewsPagerList;
     private UserInfo mUserInfo;
+    private SharedPreferencesUtil mSpUtil;
 
     @Override
     protected int getResourceId() {
@@ -79,6 +80,7 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
         mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_WAR));
         mNewsPagerList.add(new NewsFragment().setType(NewsType.CODE_POLITICS));
         mUserInfo = UserInfo.getInstance();
+        mSpUtil = SharedPreferencesUtil.getInstance(this);
     }
 
     @Override
@@ -107,7 +109,7 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
             }
         });
         if (mUserInfo.isLogin()){
-            //todo 设置自定义头像
+            ivUserImage.setImageResource(R.mipmap.ic_user);
             tvUserName.setText(mUserInfo.getUserName());
         }else{
             ivUserImage.setOnClickListener(this);
@@ -118,15 +120,18 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void logout() {
-        SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(NewsListActivity.this);
-        util.writeLogin(false);
+        mSpUtil.writeLogin(false);
         mUserInfo.setLogin(false);
+        tvUserName.setText("请登录");
+        ivUserImage.setImageResource(R.mipmap.ic_user_login);
     }
 
     @Override
     public void onClick(View view) {
+        JLog.i("on click");
         switch (view.getId()){
             case R.id.iv_user_image:
+                JLog.i("user info is login " + mUserInfo.isLogin());
                 if (!mUserInfo.isLogin()){
                     startLoginActivity();
                 }
@@ -168,14 +173,28 @@ public class NewsListActivity extends BaseActivity implements View.OnClickListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IntentExtra.LOGIN_ACTIVITY && resultCode == RESULT_OK){
-            //todo 修改头像
+            mUserInfo.setLogin(true);
+            ivUserImage.setImageResource(R.mipmap.ic_user);
             String userName = data.getStringExtra(IntentExtra.USER_NAME);
+            String account = data.getStringExtra(IntentExtra.USER_ACCOUNT);
+            PushManager.getInstance().bindAlias(NewsListActivity.this, account);
             if (!TextUtils.isEmpty(userName)){
                 tvUserName.setText(userName);
+                mUserInfo.setUserName(userName);
             }else{
                 JLog.w("登录成功，未返回用户名");
             }
+            writeUserInfoToMemory(true, account, userName);
         }
+    }
+
+    private void writeUserInfoToMemory(final boolean isLogin, final String userAccount, final String userName){
+        mSpUtil.writeLogin(isLogin);
+        if (isLogin){
+            mSpUtil.writeUserAccount(userAccount);
+            mSpUtil.writeUserName(userName);
+        }
+
     }
 
     private class MyFragmentAdapter extends FragmentPagerAdapter{

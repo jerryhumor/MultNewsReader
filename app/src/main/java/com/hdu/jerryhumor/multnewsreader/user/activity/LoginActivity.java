@@ -81,9 +81,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         if (requestCode == IntentExtra.REGISTER_ACTIVITY && resultCode == RESULT_OK){
             String userName = data.getStringExtra(IntentExtra.USER_NAME);
             String userAccount = data.getStringExtra(IntentExtra.USER_ACCOUNT);
-            PushManager.getInstance().bindAlias(LoginActivity.this, userAccount);
-            setLoginInfo(userName, userAccount);
-            setLoginSuccessResult(userName);
+            setLoginSuccessResult(userName, userAccount);
             finish();
         }
     }
@@ -130,8 +128,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            setLoginInfo(data.getUserName(), data.getAccount());
-                            setLoginSuccessResult(data.getUserName());
+                            setLoginSuccessResult(data.getUserName(), data.getAccount());
                             PushManager.getInstance().bindAlias(LoginActivity.this, data.getAccount());
                             finish();
                         }
@@ -168,9 +165,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
      * 设置登录结果
      * @param userName
      */
-    private void setLoginSuccessResult(final String userName){
+    private void setLoginSuccessResult(final String userName, final String userAccount){
         Intent intent = new Intent();
         intent.putExtra(IntentExtra.USER_NAME, userName);
+        intent.putExtra(IntentExtra.USER_ACCOUNT, userAccount);
         setResult(RESULT_OK, intent);
     }
 }

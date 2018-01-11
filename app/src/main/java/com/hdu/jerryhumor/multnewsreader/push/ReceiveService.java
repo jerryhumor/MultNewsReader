@@ -106,6 +106,7 @@ public class ReceiveService extends GTIntentService {
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_news))
                 .setOngoing(false)
                 .setContentIntent(pendingIntent)
+                .setFullScreenIntent(pendingIntent, true)
                 .build();
 
     /*

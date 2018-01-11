@@ -99,4 +99,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.insert(Database.TableFavour.TABLE_NAME, null, values);
     }
 
+    public long deleteKeepItem(final int id){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(Database.TableFavour.TABLE_NAME, "id=?", new String[]{id+""});
+    }
+
 }

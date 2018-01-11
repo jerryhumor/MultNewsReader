@@ -1,5 +1,6 @@
 package com.hdu.jerryhumor.multnewsreader.keep.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.hdu.jerryhumor.multnewsreader.R;
+import com.hdu.jerryhumor.multnewsreader.constant.IntentExtra;
+import com.hdu.jerryhumor.multnewsreader.news.activity.NewsDetailActivity;
 import com.hdu.jerryhumor.multnewsreader.news.adapter.KeepListAdapter;
 import com.hdu.jerryhumor.multnewsreader.base.BaseActivity;
 import com.hdu.jerryhumor.multnewsreader.keep.bean.KeepItem;
@@ -100,20 +103,35 @@ public class KeepNewsListActivity extends BaseActivity{
         swipeMenuRecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                //todo 点击查看新闻
-                JLog.i("on click " + position);
+                KeepItem item = mKeepList.get(position);
+                startNewsDetailActivity(item.getNewsId(), item.getTitle(), item.getSource());
             }
         });
         swipeMenuRecyclerView.setSwipeMenuItemClickListener(new SwipeMenuItemClickListener() {
             @Override
             public void onItemClick(SwipeMenuBridge menuBridge) {
-                //todo 点击取消收藏
                 //menuBridge.getPosition() 获取菜单位置
                 //menuBridge.getAdapterPosition() 获取点击条目位置
-                JLog.i("on click menu " + menuBridge.getPosition());
+                menuBridge.closeMenu();
+                KeepItem item = mKeepList.get(menuBridge.getAdapterPosition());
+                removeKeepItem(item.getId());
+                mKeepList.remove(menuBridge.getAdapterPosition());
+                mAdapter.notifyDataSetChanged();
             }
         });
         swipeMenuRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void startNewsDetailActivity(final int newsId, final String title, final int source){
+        Intent intent = new Intent(KeepNewsListActivity.this, NewsDetailActivity.class);
+        intent.putExtra(IntentExtra.NEWS_ID, newsId);
+        intent.putExtra(IntentExtra.NEWS_TITLE, title);
+        intent.putExtra(IntentExtra.NEWS_SOURCE, source);
+        startActivity(intent);
+    }
+
+    private void removeKeepItem(final int id){
+        mDBHelper.deleteKeepItem(id);
     }
 
 }

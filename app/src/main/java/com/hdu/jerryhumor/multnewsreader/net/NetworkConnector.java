@@ -93,6 +93,7 @@ public class NetworkConnector {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
+                JLog.e(string);
                 ArticleResponse articleResponse = mGson.fromJson(string, ArticleResponse.class);
                 if (articleResponse.isSuccess()){
                     callback.onSuccess(articleResponse.getContent());

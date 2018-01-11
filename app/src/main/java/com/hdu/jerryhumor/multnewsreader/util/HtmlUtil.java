@@ -67,21 +67,25 @@ public class HtmlUtil {
 
     private static String handleSinaNews(final String body){
         Document document = Jsoup.parse(body);
+        //删除关注点击按钮
         Elements followElements = document.getElementsByClass("follow");
         if (followElements != null && followElements.size() > 0){
             for (Element followElement : followElements){
                 followElement.remove();
             }
         }
+        //
         Elements imgElements = document.getElementsByTag("img");
         if (imgElements != null && imgElements.size() > 0){
             for (Element img : imgElements){
                 img.removeAttr("width");
                 img.removeAttr("height");
                 String imgUrl = img.attr("src");
-                imgUrl = "http:" + imgUrl;
-                img.removeAttr("src");
-                img.attr("src", imgUrl);
+                if (!imgUrl.contains("http://")) {
+                    imgUrl = "http:" + imgUrl;
+                    img.removeAttr("src");
+                    img.attr("src", imgUrl);
+                }
             }
         }
         return document.toString();
